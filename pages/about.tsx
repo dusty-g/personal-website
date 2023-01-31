@@ -20,14 +20,6 @@ export default function About() {
           About
         </h1>
         <Image className={styles.profilePic} src={profilePic} alt="Photo of Dusty Galindo" width={400} placeholder="blur" />
-        {/* resume */}
-        {/* Amazon - software development engineer 
-        image: https://media.licdn.com/dms/image/C560BAQHTvZwCx4p2Qg/company-logo_100_100/0/1612205615891?e=1683158400&v=beta&t=_7JS-HkS5H7O8IbLfuUCciqO_blsO0xjR_ATBKAK8Zs
-        Dec 2021 - Jan 2023 */}
-        {/* Amazon - Amazon Technical Academy - Software Development Trainee 
-         a full-time 12-month instructor-led training program.
-         same image
-         Jan 2020 - Dec 2021*/}
          <link href="https://fonts.cdnfonts.com/css/amazon-ember" rel="stylesheet"></link>
         <div className={styles.resume}>
             <section>
@@ -37,7 +29,6 @@ export default function About() {
             <img src="https://media.licdn.com/dms/image/C560BAQHTvZwCx4p2Qg/company-logo_100_100/0/1612205615891?e=1683158400&v=beta&t=_7JS-HkS5H7O8IbLfuUCciqO_blsO0xjR_ATBKAK8Zs"></img><div><h3>Amazon.com</h3><p>Jul 2019 - Jan 2023</p></div></div>
             
             <h4>Software Development Engineer</h4>
-            {/* dates */}
             <p className={styles.dates}>Dec 2021 - Jan 2023</p>
             <p>Contributed to the successful launch of Kindle Rewards Beta, a new program that rewards customers for purchasing books.</p>
             <p>Worked on backend Kindle points logic, book recommendation widget on the Kindle Rewards home page, and a points balance widget on Kindle mobile apps (iOS, Android, and FireOS).</p>

@@ -6,6 +6,8 @@ export default function Projects() {
         <>
         <Head>
             <title>Projects</title>
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5213545915383529"
+     crossOrigin="anonymous"></script>
             <meta name="description" content="Personal website for Dusty Galindo" />
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link rel="icon" href="/favicon.ico" />
