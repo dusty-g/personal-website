@@ -1,37 +1,6 @@
-.main {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6rem;
-  min-height: 50vh;
-}
-
-/* horizontal nav bar */
-.nav {
-  display: flex;
-  flex-direction: row;
-  padding: 1rem;
-  justify-content: space-between;
-  align-items: center;
-
-  background-color: aqua;
-  margin-bottom: 1rem;
-}
 
 
-/* make the list items look like butons */
-.nav li {
-  display: inline-block;
-  padding: 0.5rem;
 
-  margin: 0 0.5rem;
-  cursor: pointer;
-  background-color: #f1f1f1;
-}
 
-/* make the inactive pages darkened  */
-.inactive {
-  opacity: 0.5;
-}
+
 

@@ -1,13 +1,9 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '../styles/Home.module.css'
-import Link from 'next/link'
+import Nav from 'src/components/nav'
 
-const inter = Inter({ subsets: ['latin'] })
+
+
 //home page for my personal website
-//There should be a welcome message and a nav bar
-//There should be a marquee with today's date
 export default function Home() {
   return (
     <>
@@ -18,20 +14,15 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <nav>
-        <ul className={styles.nav}>
-          <li><Link href="/">Home</Link></li>
-          <li><Link href="/confetti">Confetti</Link></li>
-          <li className={styles.inactive}><Link href="/about">About</Link></li>
-          <li className={styles.inactive}><Link href="/projects">Projects</Link></li>
-          <li className={styles.inactive}><Link href="/contact">Contact</Link></li>
-        </ul>
-      </nav>
-      <main className={styles.main}>
-        <h1 className={styles.title}>
+      
+      <Nav />
+      <main className="main">
+        <h1>
           Dusty Galindo
         </h1>
-        <p className={styles.description}>
+    
+        
+        <p>
           Hello! My name is Dusty Galindo. I am a software developer in Seattle, Washington.
         </p>
         <p>Note: this page is a work in progress</p>

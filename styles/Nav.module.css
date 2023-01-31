@@ -1,0 +1,35 @@
+  /* horizontal nav bar */
+  .nav {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0;
+    background-color: burlywood;
+
+
+  }
+
+    /* make the inactive pages darkened this background-color should have priority  */
+
+.inactive {
+        opacity: 0.75;
+        background-color: blanchedalmond;
+    }
+/* make the list items look like butons */
+.nav li {
+    display: inline-block;
+    padding: 1rem;
+  
+    cursor: pointer;
+    
+  }
+  .active {
+    background-color: lightskyblue;
+  }
+  
+
+
+
+  
