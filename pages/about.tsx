@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Nav from "src/components/nav";
 import styles from "../styles/About.module.css";
-import profilePic from "../public/dusty1.jpg";
+import profilePic from "../public/dusty2.jpg";
 
 //placeholder for about page
 export default function About() {
