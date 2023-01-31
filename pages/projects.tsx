@@ -21,7 +21,6 @@ export default function Projects() {
                         <li>Built using Next.js</li>
                         <li>Deployed to Google App Engine</li>
                     </ul></li>
-                <li>🚧todo🚧</li>
                 <li>Open to suggestions</li>
             </ul>
         

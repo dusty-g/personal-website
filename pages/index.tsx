@@ -25,8 +25,6 @@ export default function Home() {
         <p>
           Hello! My name is Dusty Galindo. I am a software developer in Seattle, Washington.
         </p>
-        <p>Note: this page is a work in progress</p>
-        <p>Built using Next.js</p>
 
       </main>
     </>
