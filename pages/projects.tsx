@@ -1,5 +1,6 @@
 import Nav from "src/components/nav";
 import Head from "next/head";
+import Link from "next/link";
 //placeholder for projects page
 export default function Projects() {
     return (
@@ -22,6 +23,7 @@ export default function Projects() {
                     <ul>
                         <li>Built using Next.js</li>
                         <li>Deployed to Google App Engine</li>
+                        <li><Link href="projects/fizzbuzz">fizzbuzz</Link></li>
                     </ul></li>
                 <li>Open to suggestions</li>
             </ul>
