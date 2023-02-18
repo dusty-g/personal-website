@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from '../styles/FallingWords.module.css';
-const words: string[] = ['Fizz', 'Buzz', 'FizzBuzz', '❌'];
+const words: string[] = ['Fizz', 'Buzz', 'FizzBuzz'];
 
 
 const FallingWords = () => {
@@ -9,18 +9,18 @@ const FallingWords = () => {
 
     const addFallingWord = () => {
         // Set falling word based on wordCount. If wordCount is divisible by 3, 5, or 15,
-        // set falling word to Fizz, Buzz, or FizzBuzz respectively. Otherwise, set falling word to ❌.
-        let newWord = words[3] + ' (' + wordCount + ')';
+        // set falling word to Fizz, Buzz, or FizzBuzz respectively. Otherwise, set falling word to the wordCount.
+        let newWord = wordCount.toString();
         if (wordCount > 100) {
             setWordCount(1);
             setFallingWords([]);
         }
         if (wordCount % 15 === 0) {
-          newWord = words[2] + ' (' + wordCount + ')';
+          newWord = words[2];
         } else if (wordCount % 5 === 0) {
-          newWord = words[1] + ' (' + wordCount + ')';
+          newWord = words[1];
         } else if (wordCount % 3 === 0) {
-          newWord = words[0] + ' (' + wordCount + ')';
+          newWord = words[0];
         }
         setFallingWords(prevFallingWords => [...prevFallingWords, newWord]);
       };

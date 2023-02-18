@@ -1,6 +1,4 @@
 .container {
-
-
     z-index: 1;
 
     top: 0;
@@ -11,7 +9,6 @@
   
   .fallingWord {
     position: absolute;
-
 
     animation: fall 5s linear forwards;
   }

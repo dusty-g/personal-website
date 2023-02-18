@@ -19,11 +19,11 @@ export default function Projects() {
             <h1>Projects</h1>
             {/* list of projects */}
             <ul>
+                <li><Link href="projects/fizzbuzz">fizzbuzz</Link></li>
                 <li>This website! 
                     <ul>
                         <li>Built using Next.js</li>
                         <li>Deployed to Google App Engine</li>
-                        <li><Link href="projects/fizzbuzz">fizzbuzz</Link></li>
                     </ul></li>
                 <li>Open to suggestions</li>
             </ul>
