@@ -24,7 +24,7 @@ During the development of this project, I utilized ChatGPT and GitHub Copilot to
 
 Using ChatGPT, I was able to quickly learn about the concepts and best practices of Next.js and TypeScript, and get answers to any questions I had along the way. ChatGPT provided detailed explanations and examples that helped me gain a deeper understanding of these technologies.
 
-In fact, this entire README (except for this lines 1 and 27) was written by ChatGPT.
+In fact, this entire README (except for lines 1 and 27) was written by ChatGPT.
 
 ## Getting Started
 
