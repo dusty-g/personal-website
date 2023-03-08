@@ -3,11 +3,11 @@ import React, { useRef, useState, useEffect, FunctionComponent } from 'react';
 type generatingFunction = (width: number, height: number) => number[][];
 
 const Automata: FunctionComponent<{ generateGrid: generatingFunction }> = ({ generateGrid }) => {
-    //todo: update with slider like in 90.tsx
+
     //todo: update 90.tsx to use this component
     const width = 400;
     const height = 400;
-    const scaleFactor = 4;
+
     // create the canvas and context and use state to set them
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [canvas, setCanvas] = useState<HTMLCanvasElement | null>(null);
@@ -24,10 +24,10 @@ const Automata: FunctionComponent<{ generateGrid: generatingFunction }> = ({ gen
 
       const fillCanvas = (ctx: CanvasRenderingContext2D) => {
         ctx.fillStyle = 'black';
-        const grid = generateGrid(width/4,height/4)
-        for (let i = 0; i < width/4; i++) {
+        const grid = generateGrid(width,height)
+        for (let i = 0; i < width; i++) {
             
-          for (let j = 0; j < height/4; j++) {
+          for (let j = 0; j < height; j++) {
            
         
             if (grid[i][j] === 1) {
@@ -37,14 +37,30 @@ const Automata: FunctionComponent<{ generateGrid: generatingFunction }> = ({ gen
                 ctx.fillStyle = 'white';
             }
             
-            ctx.fillRect(i * 4, j * 4, 4, 4);
+            ctx.fillRect(i, j, 1, 1);
 
           }
         }
       };
+      useEffect(() => {
+        setCanvas(canvasRef.current);
+      }, [canvasRef]);
+    
+      useEffect(() => {
+        if (canvas) {
+          setCtx(canvas.getContext('2d'));
+        }
+      }, [canvas]);
+      useEffect(() => {
+          if (ctx) {
+              fillCanvas(ctx);
+          }
+      }, [ctx]);
       
       return (
+        <>
         <canvas ref={canvasRef} width={width} height={height} />
+        </>
         );
     }
     export default Automata;
