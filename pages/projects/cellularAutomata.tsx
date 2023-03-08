@@ -18,24 +18,43 @@ export default function CellularAutomata() {
             <link rel="icon" href="/favicon.ico" />
         </Head>
         <Nav />
-        <main className="main">
+        <main className={styles.automataMain}>
 
         
-        <h1>Cellular Automata</h1>
+        <h1 className={styles.heading}>Cellular Automata</h1>
         <div className={styles.text}>
-        <p className={styles.text}>I am currently reading <Link href="https://www.wolframscience.com/nks/">Stephen Wolfram&apos;s A New Kind of Science</Link></p>
-        <p></p>
-        <p className={styles.text}>In Chapter 3, he discusses cellular automata. I thought it would be fun to try to implement a few of them.</p>
-        <p></p>
-    
-        <ul>
-            <li><b>Rule 30</b> - A cell is set to the color of it&apos;s left neighbor in the previous row if it and it&apos;s right neighbor are white in the previous row. Otherwise it is set to the opposite value of that left neighbor.</li>
+        <p>I am currently reading <Link href="https://www.wolframscience.com/nks/">Stephen Wolfram&apos;s A New Kind of Science</Link></p>
+        <p >In Chapter 3, he discusses cellular automata. I thought it would be fun to try to implement a few of them.</p>
+        
+        <div>
+            <hr/>    
+            <p><b>Rule 30</b> - A cell is set to the color of it&apos;s left neighbor in the previous row if it and it&apos;s right neighbor are white in the previous row. Otherwise it is set to the opposite value of that left neighbor.</p>
             <Automata generateGrid={generateRule30} />
-            <li><b>Rule 90</b> - A cell is black if either (but not both) of it&apos;s neighbors were black on the previous row.</li>
+            <code className={styles.codeBlock}>
+                if (previousRight === 0 &amp;&amp; previousCenter === 0) &#123;<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;grid[col][row] = previousLeft;<br/>
+                &#125; else &#123;<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;grid[col][row] = previousLeft === 0 ? 1 : 0;<br/>
+                &#125;
+            </code>
+
+            <hr/>
+            <p><b>Rule 90</b> - A cell is black if either (but not both) of it&apos;s neighbors were black on the previous row.</p>
             <Automata generateGrid={generateRule90} />
-            <li><b>Rule 254</b> - A cell is black if it&apos;s left or right neighbor were black in the previous row.</li>
+            <code className={styles.codeBlock}>
+            if (previousLeft ^ previousRight) &#123;<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;grid[col][row] = 1;<br/>
+            &#125;
+            </code>
+            <hr/>
+            <p><b>Rule 254</b> - A cell is black if it or it&apos;s left or right neighbor were black in the previous row.</p>
             <Automata generateGrid={generateRule254} />
-        </ul>
+            <code className={styles.codeBlock}>
+            if (previousLeft || previousRight || previousCenter) &#123;<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;grid[col][row] = 1;<br/>
+            &#125;
+            </code>
+        </div>
         </div>
         </main>
         </>

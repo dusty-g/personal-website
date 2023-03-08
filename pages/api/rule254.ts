@@ -21,11 +21,7 @@ export function generateRule254(numCols: number, numRows: number) {
             const right = col === numCols - 1 ? 0 : grid[col + 1][row - 1];
 
             //
-            if (!left && !right && !center) {
-                grid[col][row] = 0;
-            }
-            // otherwise, set the current cell to 1
-            else {
+            if (left || right || center) {
                 grid[col][row] = 1;
             }
 

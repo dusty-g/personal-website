@@ -18,18 +18,18 @@ export function generateRule30(numCols: number, numRows: number) {
         for (let col = 0; col < numCols; col++) {
             // get the value of the previous row's adjacent cells
             // we want the left cell to wrap around to the right side of the grid
-            const left = col === 0 ? grid[numCols - 1][row - 1] : grid[col-1][row - 1]
+            const previousLeft = col === 0 ? grid[numCols - 1][row - 1] : grid[col-1][row - 1]
             // const left = col === 0 ? 0 : grid[col-1][row - 1]
             // get the value of the previous row's center cell
-            const center = grid[col][row - 1];
+            const previousCenter = grid[col][row - 1];
             // get the value of the previous row's right cell
-            const right = col === numCols - 1 ? 0 : grid[col + 1][row - 1];
+            const previousRight = col === numCols - 1 ? 0 : grid[col + 1][row - 1];
 
             // If the previous row's right and center are both 0, then the current cell should be equal to the previous row's left cell. Otherwise, it should be the opposite of the previous row's left cell.
-            if (right === 0 && center === 0) {
-                grid[col][row] = left;
+            if (previousRight === 0 && previousCenter === 0) {
+                grid[col][row] = previousLeft;
             } else {
-                grid[col][row] = left === 0 ? 1 : 0;
+                grid[col][row] = previousLeft === 0 ? 1 : 0;
             }
 
 

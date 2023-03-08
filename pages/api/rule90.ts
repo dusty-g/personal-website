@@ -14,22 +14,15 @@ export function generateRule90(numCols: number, numRows: number) {
         // loop through each cell in the row
         for (let col = 0; col < numCols; col++) {
             // get the value of the previous row's adjacent cells
-            const left = col === 0 ? 0 : grid[col-1][row - 1]
+            const previousLeft = col === 0 ? 0 : grid[col-1][row - 1]
             // get the value of the previous row's center cell
             const center = grid[col][row - 1];
             // get the value of the previous row's right cell
-            const right = col === numCols - 1 ? 0 : grid[col + 1][row - 1];
+            const previousRight = col === numCols - 1 ? 0 : grid[col + 1][row - 1];
 
             // the cell should be 1 if either of it's previous neighbors were 1, but not both
-            if (left || right) {
+            if (previousLeft ^ previousRight) {
                 grid[col][row] = 1;
-                if (left && right) {
-                    grid[col][row] = 0;
-                }
-            }
-            // otherwise, set the current cell to 0
-            else {
-                grid[col][row] = 0;
             }
 
         }

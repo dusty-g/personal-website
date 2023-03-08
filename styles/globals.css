@@ -32,6 +32,14 @@ body {
   min-height: 50vh;
 }
 
+/* styling for the canvas */
+canvas {
+  /* add top and bottom margin */
+  margin: 1rem 0;
+  /* center horizontally */
+  
+}
+
 /* @media (prefers-color-scheme: dark) {
   
 } */
