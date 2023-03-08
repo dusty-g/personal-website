@@ -13,7 +13,7 @@ const Rule254 = () => {
       <div>
         <main className="main">
         <h1>Rule 254</h1>
-        <p>A cell is black if it's left or right neighbor were black in the previous row</p>
+        <p>A cell is black if it&apos;s left or right neighbor were black in the previous row</p>
         <Automata generateGrid={generateRule254} />
         </main>
       </div>
