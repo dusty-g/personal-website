@@ -29,11 +29,11 @@ export default function CellularAutomata() {
         <p></p>
     
         <ul>
-            <li><b>Rule 30</b> - A cell is set to the color of it's left neighbor in the previous row if it and it's right neighbor are white in the previous row. Otherwise it is set to the opposite value of that left neighbor.</li>
+            <li><b>Rule 30</b> - A cell is set to the color of it&apos;s left neighbor in the previous row if it and it&apos;s right neighbor are white in the previous row. Otherwise it is set to the opposite value of that left neighbor.</li>
             <Automata generateGrid={generateRule30} />
             <li><b>Rule 90</b> - A cell is black if either (but not both) of it&apos;s neighbors were black on the previous row.</li>
             <Automata generateGrid={generateRule90} />
-            <li><b>Rule 254</b> - A cell is black if it's left or right neighbor were black in the previous row.</li>
+            <li><b>Rule 254</b> - A cell is black if it&apos;s left or right neighbor were black in the previous row.</li>
             <Automata generateGrid={generateRule254} />
         </ul>
         </div>
