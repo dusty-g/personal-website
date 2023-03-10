@@ -25,6 +25,7 @@ export default function CellularAutomata() {
         <div className={styles.text}>
         <p>I am currently reading <Link href="https://www.wolframscience.com/nks/">Stephen Wolfram&apos;s A New Kind of Science</Link></p>
         <p >In Chapter 3, he discusses cellular automata. I thought it would be fun to try to implement a few of them.</p>
+        <p>The state of a cell is determined by the state of it and it&apos;s neighbors in the previous row. There are 8 possible combinations of three cells, so 256 possible sets of cellular automata rules. Wolfram's numbering system assigns a 0 or 1 to each configuration if the next cell will be white or black. The resulting 8 digit binary number is converted to base 10.</p>
         
         <div>
             <hr/>    

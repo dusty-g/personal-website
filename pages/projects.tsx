@@ -1,6 +1,8 @@
 import Nav from "src/components/nav";
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
+import typImage from "../public/KR_TYP.png";
 //placeholder for projects page
 export default function Projects() {
     return (
@@ -19,7 +21,20 @@ export default function Projects() {
             <h1>Projects</h1>
             {/* list of projects */}
             <ul>
-                
+                <li>Kindle Rewards
+                    <ul>
+                        <li>"Thank You Page" message
+                            <ul>
+                                {/* a description of the kindle rewards "thank you page" message. and how I completed the front and back ends to make it work.  */}
+                                <li>Added a message to the Amazon "Thank You" page on eligible ebook purchases to increase awareness of the Kindle Rewards program and drive traffic to the Kindle Rewards homepage.</li>
+                                <li>Front end: HTML, CSS, JavaScript</li>
+                                <li>Back end: Java</li>
+                                <li>Required calling multiple backend services to check customer and ebook eligibility. Due to the interdependent nature of these changes, I took on the responsibility of coordinating with each of the respective teams and obtaining their approval in order to ensure the successful launch of this new feature.</li>
+                                <li><Image src={typImage} alt="Kindle Rewards Thank You page" /></li>
+                                </ul>
+                        </li>
+                        </ul>
+                </li>
                 <li>This website! 
                     <ul>
                         <li>Built using Next.js</li>

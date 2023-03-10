@@ -19,7 +19,6 @@ export default function About() {
         <h1>
           About
         </h1>
-        <Image className={styles.profilePic} src={profilePic} alt="Photo of Dusty Galindo" width={400} placeholder="blur" />
          <link href="https://fonts.cdnfonts.com/css/amazon-ember" rel="stylesheet"></link>
         <div className={styles.resume}>
             <section>

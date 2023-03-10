@@ -1,4 +1,11 @@
+.profilePic{
+    /* responsive */
+    width: 100%;
+    height: auto;
+    max-width: 500px;
 
+    margin-bottom: 1rem;
+  }
 
 
 
