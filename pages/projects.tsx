@@ -23,10 +23,10 @@ export default function Projects() {
             <ul>
                 <li>Kindle Rewards
                     <ul>
-                        <li>"Thank You Page" message
+                        <li>&quot;Thank You Page&quot; message
                             <ul>
                                 {/* a description of the kindle rewards "thank you page" message. and how I completed the front and back ends to make it work.  */}
-                                <li>Added a message to the Amazon "Thank You" page on eligible ebook purchases to increase awareness of the Kindle Rewards program and drive traffic to the Kindle Rewards homepage.</li>
+                                <li>Added a message to the Amazon &quot;Thank You&quot; page on eligible ebook purchases to increase awareness of the Kindle Rewards program and drive traffic to the Kindle Rewards homepage.</li>
                                 <li>Front end: HTML, CSS, JavaScript</li>
                                 <li>Back end: Java</li>
                                 <li>Required calling multiple backend services to check customer and ebook eligibility. Due to the interdependent nature of these changes, I took on the responsibility of coordinating with each of the respective teams and obtaining their approval in order to ensure the successful launch of this new feature.</li>
