@@ -1,0 +1,14 @@
+/* project images */
+.projectImage {
+  width: 100%;
+  /* height should be auto */
+    height: auto;
+  object-fit: cover;
+}
+/* reduce the list indentation based on screen width */
+
+.projectsList li {
+    margin-left: -20px;
+    /* add a little vertical space between items */
+    margin-bottom: 0.5rem;
+}
