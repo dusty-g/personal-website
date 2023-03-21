@@ -1,0 +1,11 @@
+
+.jobTable {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+    font-size: 12px;
+}
+/* center the td */
+.jobTable td {
+    text-align: center;
+}
