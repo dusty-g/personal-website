@@ -4,8 +4,19 @@
     border-collapse: collapse;
     border: 1px solid #ccc;
     font-size: 12px;
+
 }
 /* center the td */
 .jobTable td {
     text-align: center;
+    /* add border */
+    border: 1px solid #ccc;
+}
+.rejected {
+    background-color: #ffcccc;
+}
+/* bold border around head */
+.jobTable th {
+    border: 1px solid #ccc;
+    font-weight: bold;
 }
