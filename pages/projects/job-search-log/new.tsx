@@ -9,7 +9,7 @@ import { getAuth, signInWithPopup, GoogleAuthProvider, Auth, User } from "fireba
 
 const provider = new GoogleAuthProvider();
 // create a custom hook to get the firebase auth instance
-export function useAuth() {
+export function useAuth() : Auth | null{
     const [auth, setAuth] = useState<Auth | null>(null);
   
     useEffect(() => {
@@ -23,34 +23,32 @@ export function useAuth() {
   }
 
 
+
+
 // create a new job search log entry
 export default function New() {
-    
-    
-    // check if the user is signed in
     const auth = useAuth();
+    //subscribe to auth state changes
+    const [user, setUser] = useState<User | null>(null);
     useEffect(() => {
-        if (auth) {
-            if (!auth.currentUser) {
-                signInWithPopup(auth, provider)
-                .catch((error) => {
-                    // Handle Errors here.
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    // The email of the user's account used.
-                    const email = error.email;
-                    // The AuthCredential type that was used.
-                    const credential = GoogleAuthProvider.credentialFromError(error);
-                    // ...
-                    // create alert
-                    alert(`Error: ${errorCode} ${errorMessage} ${email} ${credential}`);
-
-                });
-            }  
-        }
+        const unsubscribe = auth?.onAuthStateChanged((user) => {
+            if (user) {
+                // user is signed in
+                setUser(user);
+            } else {
+                // user is signed out
+                setUser(null);
+            }
+        });
+        return unsubscribe;
     }, [auth]);
+    // user
+    
+
 
     
+    
+        
     
      
     
@@ -139,6 +137,20 @@ export default function New() {
             );
         }
     };
+    function signIn(): void {
+        // sign in with Google popup, check if auth is null first
+        if (auth) {
+            signInWithPopup(auth, provider)
+                .then((result) => {
+                })
+                .catch((error) => {
+                    console.log(error);
+                }
+            );
+
+        }
+    }
+
     return (
         <>
         <Head>
@@ -149,9 +161,13 @@ export default function New() {
         <Nav />
         <main className='main'>
             <h1>Create New Job Log</h1>
-            {/* need a way to know if I'm logged in or not. make a <p> that says either logged in or not logged in based on auth status*/}
-            
-            <p>Signed in as: {auth?.currentUser?.email}</p>
+           
+            {user && (<button onClick={() => auth?.signOut()}>Sign out {user.email}</button>)}
+
+            {!user && (
+                // sign in button
+                <button onClick={() => signIn()}>Sign in with Google</button>)}
+
             {auth?.currentUser?.email !== "dustygalindo@gmail.com" && (
                 <p>You are not authorized to view this page. This is where I submit new jobs I applied for.</p>)}
 
