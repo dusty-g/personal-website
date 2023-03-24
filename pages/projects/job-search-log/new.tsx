@@ -22,9 +22,6 @@ export function useAuth() : Auth | null{
     return auth;
   }
 
-
-
-
 // create a new job search log entry
 export default function New() {
     const auth = useAuth();
@@ -42,21 +39,6 @@ export default function New() {
         });
         return unsubscribe;
     }, [auth]);
-    // user
-    
-
-
-    
-    
-        
-    
-     
-    
-            
-
-
-
-
 
     // set state for form data
     const [companyName, setCompanyName] = useState('');

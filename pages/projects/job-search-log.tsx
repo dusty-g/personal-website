@@ -49,14 +49,7 @@ export default function JobSearchLog() {
             </thead>
             <tbody>
                 
-                
-                {/* <tr>
-                    <td>company name</td>
-                    <td>job title</td>
-                    <td>date applied</td>
-                    <td>application status</td>
-                    <td>notes</td>
-                </tr> */}
+        
                 {/* get data from firebase */}
                 {jobData.map((job) => (
                     // add conditional class for rejected applications
@@ -71,8 +64,6 @@ export default function JobSearchLog() {
                 
             </tbody>
         </table>
-        <p>*just sample data for today. Will update tomorrow 03/23</p>
-
         </main>
         </>
     )
