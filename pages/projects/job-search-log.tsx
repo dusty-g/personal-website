@@ -42,6 +42,7 @@ export default function JobSearchLog() {
                 <tr>
                     <th>Company</th>
                     <th>Job Title</th>
+                    <th>Job Description</th>
                     <th>Date Applied</th>
                     <th>Application Status</th>
                     <th>Notes</th>
@@ -56,6 +57,7 @@ export default function JobSearchLog() {
                     <tr key={job.id} className={job.applicationStatus === 'rejected' ? styles.rejected : ''}>
                         <td>{job.companyName}</td>
                         <td>{job.jobTitle}</td>
+                        <td>{job.jobDescription}</td>
                         <td>{job.dateApplied}</td>
                         <td>{job.applicationStatus}</td>
                         <td>{job.notes}</td>

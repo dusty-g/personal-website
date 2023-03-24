@@ -6,6 +6,7 @@ import Head from "next/head";
 import Nav from "src/components/nav";
 
 import { getAuth, signInWithPopup, GoogleAuthProvider, Auth, User } from "firebase/auth";
+import router from "next/router";
 
 const provider = new GoogleAuthProvider();
 // create a custom hook to get the firebase auth instance
@@ -86,6 +87,9 @@ export default function New() {
         if (applicationStatus === '') {
             setApplicationStatusError('Application Status is required');
         }
+        if (notes === '') {
+            setNotesError('Notes is required');
+        }
 
         // if form is valid, submit form
         if (companyName && jobTitle && dateApplied && applicationStatus && notes) {
@@ -117,7 +121,17 @@ export default function New() {
                     setSubmissionError(error.message);
                 }
             );
+            // reset form
+            setCompanyName('');
+            setJobTitle('');
+            setJobDescription('');
+            setDateApplied('');
+            setApplicationStatus('');
+            setNotes('');
+            // redirect to job search log page
+            router.push('/projects/job-search-log');
         }
+
     };
     function signIn(): void {
         // sign in with Google popup, check if auth is null first
