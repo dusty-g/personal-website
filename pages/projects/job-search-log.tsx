@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { ref, onValue } from "firebase/database";
 //import db from _app.tsx
 import { db } from 'src/pages/_app'
+import Link from 'next/link';
 
 export default function JobSearchLog() {
     // get data from firebase. need to set types. fixed in next line
@@ -36,6 +37,10 @@ export default function JobSearchLog() {
         
         <main className='main'>
         <h1>Job Search Log</h1>
+        {/* description */}
+        <p>This is where I keep track of jobs I&apos;ve applied to.</p>
+        <p>I am using Google Firebase Realtime Database, which is a NoSQL database. I am using the React library for Firebase to retrieve data from the database and display it on the page.</p>
+        <p>I add new entries to the database using a form on the <Link href="/projects/job-search-log/new">Create New Job Log</Link> page. I use Google Authentication to sign in with my Google account. Only I can add new entries to the database.</p>
         {/* table of job applications retrieved from firebase */}
         <table className={styles.jobTable}>
             <thead>
@@ -60,7 +65,7 @@ export default function JobSearchLog() {
                         <td>{job.jobDescription}</td>
                         <td>{job.dateApplied}</td>
                         <td>{job.applicationStatus}</td>
-                        <td>{job.notes}</td>
+                        <td className={styles.wordBreak}>{job.notes}</td>
                     </tr>
                 ))}
                 

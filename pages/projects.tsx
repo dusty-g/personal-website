@@ -25,9 +25,9 @@ export default function Projects() {
             <ul className={styles.projectsList}>
             <li><h3>Small/Fun projects</h3>
                     <ul>
+                        <li><Link href="projects/job-search-log">Job Search Log</Link></li>
                         <li><Link href="projects/cellularAutomata/">Cellular Automata</Link></li>
                         <li><Link href="projects/fizzbuzz">fizzbuzz</Link></li>
-                        {/* link to pokemon.html in public directory */}
                         <li><Link href="/pokemon.html">Experimenting with P5.js</Link></li>
                     </ul>
                 </li>
