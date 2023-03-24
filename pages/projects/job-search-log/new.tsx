@@ -1,12 +1,65 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import firebase
 import { push, ref, set } from "firebase/database";
 import { db } from 'src/pages/_app'
 import Head from "next/head";
 import Nav from "src/components/nav";
 
+import { getAuth, signInWithPopup, GoogleAuthProvider, Auth, User } from "firebase/auth";
+
+const provider = new GoogleAuthProvider();
+// create a custom hook to get the firebase auth instance
+export function useAuth() {
+    const [auth, setAuth] = useState<Auth | null>(null);
+  
+    useEffect(() => {
+      // initialize firebase auth only once
+      if (!auth) {
+        setAuth(getAuth());
+      }
+    }, [auth]);
+  
+    return auth;
+  }
+
+
 // create a new job search log entry
 export default function New() {
+    
+    
+    // check if the user is signed in
+    const auth = useAuth();
+    useEffect(() => {
+        if (auth) {
+            if (!auth.currentUser) {
+                signInWithPopup(auth, provider)
+                .catch((error) => {
+                    // Handle Errors here.
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    // The email of the user's account used.
+                    const email = error.email;
+                    // The AuthCredential type that was used.
+                    const credential = GoogleAuthProvider.credentialFromError(error);
+                    // ...
+                    // create alert
+                    alert(`Error: ${errorCode} ${errorMessage} ${email} ${credential}`);
+
+                });
+            }  
+        }
+    }, [auth]);
+
+    
+    
+     
+    
+            
+
+
+
+
+
     // set state for form data
     const [companyName, setCompanyName] = useState('');
     const [jobTitle, setJobTitle] = useState('');
@@ -96,10 +149,19 @@ export default function New() {
         <Nav />
         <main className='main'>
             <h1>Create New Job Log</h1>
+            {/* need a way to know if I'm logged in or not. make a <p> that says either logged in or not logged in based on auth status*/}
+            
+            <p>Signed in as: {auth?.currentUser?.email}</p>
+            {auth?.currentUser?.email !== "dustygalindo@gmail.com" && (
+                <p>You are not authorized to view this page. This is where I submit new jobs I applied for.</p>)}
+
+
             {/* display success message if submissionSuccess is true */}
             {submissionSuccess && <p>Job Log Created!</p>}
             {/* display error message if submissionError is not empty */}
             {submissionError && <p>{submissionError}</p>}
+            
+            {auth?.currentUser?.email === "dustygalindo@gmail.com" && (
             <form onSubmit={handleSubmit}>
                 <label htmlFor="companyName">Company Name</label>
                 <input
@@ -168,6 +230,7 @@ export default function New() {
                     Submit
                 </button>
             </form>
+            )}
         </main>
 
         </>

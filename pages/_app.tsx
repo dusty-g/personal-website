@@ -6,6 +6,8 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 // add database
 import { getDatabase } from "firebase/database";
+import { useEffect, useState } from 'react';
+import { getAuth } from 'firebase/auth';
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
@@ -26,6 +28,10 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 // get database and export
 export const db = getDatabase(app);
+
+// get auth and export
+export const auth = getAuth(app);
+
 
 export default function App({ Component, pageProps }: AppProps) {
   return <Component {...pageProps} />
