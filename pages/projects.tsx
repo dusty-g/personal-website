@@ -27,7 +27,7 @@ export default function Projects() {
                     <ul>
                         <li><Link href="projects/job-search-log">Job Search Log</Link></li>
                         <li><Link href="projects/cellularAutomata/">Cellular Automata</Link></li>
-                        <li><Link href="projects/fizzbuzz">fizzbuzz</Link></li>
+                        <li><Link href="projects/fizzbuzz">FizzBuzz</Link></li>
                         <li><Link href="/pokemon.html">Experimenting with P5.js</Link></li>
                     </ul>
                 </li>

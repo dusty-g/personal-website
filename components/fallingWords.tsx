@@ -12,6 +12,7 @@ const FallingWords = () => {
         // set falling word to Fizz, Buzz, or FizzBuzz respectively. Otherwise, set falling word to the wordCount.
         let newWord = wordCount.toString();
         if (wordCount > 100) {
+            // Reset wordCount and fallingWords if wordCount is greater than 100
             setWordCount(1);
             setFallingWords([]);
         }
