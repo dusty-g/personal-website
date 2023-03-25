@@ -87,9 +87,11 @@ export default function New() {
         if (applicationStatus === '') {
             setApplicationStatusError('Application Status is required');
         }
-        if (notes === '') {
-            setNotesError('Notes is required');
-        }
+        
+        // commented out because notes are not required
+        // if (notes === '') {
+        //     setNotesError('Notes is required');
+        // }
 
         // if form is valid, submit form
         if (companyName && jobTitle && dateApplied && applicationStatus && notes) {
