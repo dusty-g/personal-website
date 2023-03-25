@@ -5,6 +5,9 @@
     left: 0;
 
     height: 100vh;
+    /* Use flex to center children */
+    display: flex;
+    justify-content: center;
   }
   
   .fallingWord {
