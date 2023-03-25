@@ -46,9 +46,9 @@ export default function Projects() {
                         <li><h4>Rewards Home Books Carousel</h4></li>
                         <Image className={styles.projectImage} src={shoveler} alt="Kindle Rewards home page"/>
                             <ul>
-                                <li>I was responsible for configuring the backend systems used to generate personalized book recommendations to customers on the Kindle Rewards home page. This involved collaborating with the teams who owned the recommendation systems, as well as the team who owned the system that delivered the generated recommendations to the book carousel on the front end. 
+                                <li>I configured the backend systems that delivered personalized book recommendations to Kindle Rewards customers. I collaborated with multiple teams to ensure the quality and compatibility of the recommendation systems, the book carousel, and the home page.
                                 </li>
-                                <li>I also had to coordinate with the team who owned the home page that displayed the book carousel, ensuring that it was compatible with the backend systems and met the design and performance requirements.</li>
+                                
                             </ul>
                         </ul>
                 </li>
