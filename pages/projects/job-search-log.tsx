@@ -38,9 +38,8 @@ export default function JobSearchLog() {
         <main className='main'>
         <h1>Job Search Log</h1>
         {/* description */}
-        <p>This is where I keep track of jobs I&apos;ve applied to.</p>
         <p>I am using Google Firebase Realtime Database, which is a NoSQL database. I am using the React library for Firebase to retrieve data from the database and display it on the page.</p>
-        <p>I add new entries to the database using a form on the <Link href="/projects/job-search-log/new">Create New Job Log</Link> page. I use Google Authentication to sign in with my Google account. Only I can add new entries to the database.</p>
+        <p>I add new entries to the database using a form on the <Link href="/projects/job-search-log/new">Create New Job Log</Link> page. I use Google Authentication to sign in with my Google account. The database is configured to only allow my account to write to the database.</p>
         {/* table of job applications retrieved from firebase */}
         <table className={styles.jobTable}>
             <thead>
