@@ -271,7 +271,7 @@ export default function New() {
                 <button type="submit" disabled={isSubmitting}>
                 Submit
                 </button>
-                {auth?.currentUser?.email !== "dustygalindo@gmail.com" && (<p className={styles.error}>You can click submit if you want to test the input validation (all fields required except 'notes'). If the validation passes you'll be redirected to the Job Search Log page (the submission will be rejected by the database rules).</p>)}
+                {auth?.currentUser?.email !== "dustygalindo@gmail.com" && (<p className={styles.error}>You can click submit if you want to test the input validation (all fields required except &apos;notes&apos;). If the validation passes you&apos;ll be redirected to the Job Search Log page (the submission will be rejected by the database rules).</p>)}
 
             </form>
             
