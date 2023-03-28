@@ -1,0 +1,68 @@
+/* make the form look better */
+.form {
+    border-radius: 5px;
+    background-color: #add8e6;
+    padding: 20px;
+}
+/* validation errors */
+.error {
+    color: red;
+
+    /* give it a slightly rounded grey background */
+    background-color: #f2f2f2;
+    padding: 10px;
+    border-radius: 5px;
+    /* give it a border */
+    border: 1px solid #ccc;
+    /* give it a margin */
+    margin: 10px 0;
+
+}
+/* make the input fields look better */
+.form input[type="text"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+.form input[type="text"]:focus {
+    border: 2px solid #555;
+}
+/* text area */
+.form textarea {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+/* date selector */
+.form input[type="date"] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+/* selection */
+.form select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    -webkit-transition: 0.5s;
+    transition: 0.5s;
+    outline: none;
+}
+

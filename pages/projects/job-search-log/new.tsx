@@ -7,6 +7,8 @@ import Nav from "src/components/nav";
 
 import { getAuth, signInWithPopup, GoogleAuthProvider, Auth, User } from "firebase/auth";
 import router from "next/router";
+// import styles
+import styles from 'src/styles/NewJobSearchLog.module.css'
 
 const provider = new GoogleAuthProvider();
 // create a custom hook to get the firebase auth instance
@@ -44,6 +46,7 @@ export default function New() {
     // set state for form data
     const [companyName, setCompanyName] = useState('');
     const [jobTitle, setJobTitle] = useState('');
+    const [jobUrl, setJobUrl] = useState('');
     const [jobDescription, setJobDescription] = useState('');
     const [dateApplied, setDateApplied] = useState('');
     const [applicationStatus, setApplicationStatus] = useState('');
@@ -51,6 +54,7 @@ export default function New() {
     // set state for form validation
     const [companyNameError, setCompanyNameError] = useState('');
     const [jobTitleError, setJobTitleError] = useState('');
+    const [jobUrlError, setJobUrlError] = useState('');
     const [jobDescriptionError, setJobDescriptionError] = useState('');
     const [dateAppliedError, setDateAppliedError] = useState('');
     const [applicationStatusError, setApplicationStatusError] = useState('');
@@ -67,6 +71,7 @@ export default function New() {
         // validate form
         setCompanyNameError('');
         setJobTitleError('');
+        setJobUrlError('');
         setJobDescriptionError('');
         setDateAppliedError('');
         setApplicationStatusError('');
@@ -77,6 +82,9 @@ export default function New() {
         }
         if (jobTitle === '') {
             setJobTitleError('Job Title is required');
+        }
+        if (jobUrl === '') {
+            setJobUrlError('Job URL is required');
         }
         if (jobDescription === '') {
             setJobDescriptionError('Job Description is required');
@@ -94,7 +102,8 @@ export default function New() {
         // }
 
         // if form is valid, submit form
-        if (companyName && jobTitle && dateApplied && applicationStatus && notes) {
+        // if (companyName && jobUrl && jobTitle && dateApplied && applicationStatus) {
+        if (companyName && jobUrl && jobTitle && dateApplied && applicationStatus && jobDescription) {
             // set isSubmitting to true to disable form
             setIsSubmitting(true);
             // set submissionError to empty string
@@ -103,6 +112,7 @@ export default function New() {
             const newJob = {
                 companyName: companyName,
                 jobTitle: jobTitle,
+                url: jobUrl,
                 jobDescription: jobDescription,
                 dateApplied: dateApplied,
                 applicationStatus: applicationStatus,
@@ -126,6 +136,7 @@ export default function New() {
             // reset form
             setCompanyName('');
             setJobTitle('');
+            setJobUrl('');
             setJobDescription('');
             setDateApplied('');
             setApplicationStatus('');
@@ -166,8 +177,9 @@ export default function New() {
                 // sign in button
                 <button onClick={() => signIn()}>Sign in with Google</button>)}
 
-            {auth?.currentUser?.email !== "dustygalindo@gmail.com" && (
-                <p>You are not authorized to view this page. This is where I submit new jobs I applied for.</p>)}
+{auth?.currentUser?.email !== "dustygalindo@gmail.com" && (
+                <p>This is the form I use to submit new job applications. I use Google Auth to ensure that only submissions from my account will be accepted</p>)}
+            
 
 
             {/* display success message if submissionSuccess is true */}
@@ -175,9 +187,11 @@ export default function New() {
             {/* display error message if submissionError is not empty */}
             {submissionError && <p>{submissionError}</p>}
             
-            {auth?.currentUser?.email === "dustygalindo@gmail.com" && (
-            <form onSubmit={handleSubmit}>
+            
+            <form onSubmit={handleSubmit} className={styles.form}>
                 <label htmlFor="companyName">Company Name</label>
+                {/* display error message if companyNameError is not empty */}
+                {companyNameError && <p className={styles.error}>{companyNameError}</p>}
                 <input
                     type="text"
                     id="companyName"
@@ -185,9 +199,10 @@ export default function New() {
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
                 />
-                {/* display error message if companyNameError is not empty */}
-                {companyNameError && <p>{companyNameError}</p>}
+                
                 <label htmlFor="jobTitle">Job Title</label>
+                {/* display error message if jobTitleError is not empty with class 'error' */}
+                {jobTitleError && <p className={styles.error}>{jobTitleError}</p>}
                 <input
                     type="text"
                     id="jobTitle"
@@ -195,17 +210,29 @@ export default function New() {
                     value={jobTitle}
                     onChange={(e) => setJobTitle(e.target.value)}
                 />
+                
+                {/* job url */}
+                <label htmlFor="jobUrl">Job URL</label>
+                {/* display error message if jobUrlError is not empty */}
+                {jobUrlError && <p className={styles.error}>{jobUrlError}</p>}
+
+                <input
+                    type="text"
+                    id="jobUrl"
+                    name="jobUrl"
+                    value={jobUrl}
+                    onChange={(e) => setJobUrl(e.target.value)}
+                />
+                {/* job description */}
                 <label htmlFor="jobDescription">Job Description</label>
                 {/* display error message if jobDescriptionError is not empty */}
-                {jobDescriptionError && <p>{jobDescriptionError}</p>}
+                {jobDescriptionError && <p className={styles.error}>{jobDescriptionError}</p>}
                 <textarea
                     id="jobDescription"
                     name="jobDescription"
                     value={jobDescription}
                     onChange={(e) => setJobDescription(e.target.value)}
                 />
-                {/* display error message if jobTitleError is not empty */}
-                {jobTitleError && <p>{jobTitleError}</p>}
                 <label htmlFor="dateApplied">Date Applied</label>
                 <input
                     type="date"
@@ -215,7 +242,7 @@ export default function New() {
                     onChange={(e) => setDateApplied(e.target.value)}
                 />
                 {/* display error message if dateAppliedError is not empty */}
-                {dateAppliedError && <p>{dateAppliedError}</p>}
+                {dateAppliedError && <p className={styles.error}>{dateAppliedError}</p>}
                 <label htmlFor="applicationStatus">Application Status</label>
                 <select
                     id="applicationStatus"
@@ -230,7 +257,7 @@ export default function New() {
                     <option value="Rejected">Rejected</option>
                 </select>
                 {/* display error message if applicationStatusError is not empty */}
-                {applicationStatusError && <p>{applicationStatusError}</p>}
+                {applicationStatusError && <p className={styles.error}>{applicationStatusError}</p>}
                 <label htmlFor="notes">Notes</label>
                 <textarea
                     id="notes"
@@ -240,11 +267,14 @@ export default function New() {
                 />
                 {/* display error message if notesError is not empty */}
                 {notesError && <p>{notesError}</p>}
+                
                 <button type="submit" disabled={isSubmitting}>
-                    Submit
+                Submit
                 </button>
+                {auth?.currentUser?.email !== "dustygalindo@gmail.com" && (<p className={styles.error}>You can click submit if you want to test the input validation (all fields required except 'notes'). If the validation passes you'll be redirected to the Job Search Log page (the submission will be rejected by the database rules).</p>)}
+
             </form>
-            )}
+            
         </main>
 
         </>

@@ -61,7 +61,9 @@ export default function JobSearchLog() {
                     // add conditional class for rejected applications
                     <tr key={job.id} className={job.applicationStatus === 'rejected' ? styles.rejected : ''}>
                         <td>{job.companyName}</td>
-                        <td>{job.jobTitle}</td>
+                        {/* add a link to job.url */}
+                        {/* <td>{job.jobTitle}</td> */}
+                        <td><Link href={job.url}>{job.jobTitle}</Link></td>
                         <td>{job.jobDescription}</td>
                         <td>{job.dateApplied}</td>
                         <td>{job.applicationStatus}</td>
