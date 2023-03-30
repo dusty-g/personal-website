@@ -13,7 +13,18 @@ export default function JobSearchLog() {
     // get data from firebase. need to set types. fixed in next line
     const [jobData, setJobData] = useState<any[]>([]);
     useEffect(() => {
-        // get data from firebase
+        
+        // const dbRef = ref(db, 'jobs');
+        // onValue(dbRef, (snapshot) => {
+        //     const data = snapshot.val();
+        //     const jobData = [];
+        //     for (let key in data) {
+        //         jobData.push({ id: key, ...data[key] });
+        //     }
+        //     setJobData(jobData);
+        // });
+
+        // get data from firebase sorted by dateApplied
         const dbRef = ref(db, 'jobs');
         onValue(dbRef, (snapshot) => {
             const data = snapshot.val();
@@ -21,8 +32,13 @@ export default function JobSearchLog() {
             for (let key in data) {
                 jobData.push({ id: key, ...data[key] });
             }
+            // sort by dateApplied
+            jobData.sort((a, b) => {
+                return new Date(b.dateApplied).getTime() - new Date(a.dateApplied).getTime();
+            });
             setJobData(jobData);
-        });
+        }
+        );
     }, []);
 
     
