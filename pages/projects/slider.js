@@ -1,8 +1,11 @@
 // components/Slider.js
 import { useEffect, useRef } from "react";
+// import link
+import Link from "next/link";
 //gamepad api
 //https://developer.mozilla.org/en-US/docs/Web/API/Gamepad_API/Using_the_Gamepad_API
-
+//import styles
+import styles from '../../styles/Slider.module.css'
 
 
 import Head from 'next/head'
@@ -19,7 +22,7 @@ export default function Slider() {
   // set audioRef to the audio element
   useEffect(() => {
     const audio = document.querySelector("audio");
-    audio.playbackRate = 0.1;
+    audio.playbackRate = 1;
     audioRef.current = audio;
   }, []);
   
@@ -55,6 +58,27 @@ export default function Slider() {
     };
   }
 
+
+  // update sliderRef based on the value of the slider input
+  function handleSliderInput() {
+    // Get the value of the slider
+    const sliderValue = sliderRef.current.value;
+    // Update the playback speed of the audio element
+    audioRef.current.playbackRate = sliderValue;
+    //if the playbackRate is less than or equal to 0.75, pause the audio element
+    if (audioRef.current.playbackRate <= 0.75) {
+      audioRef.current.pause();
+    }
+    //if the playbackRate is greater than 0.75, play the audio element
+    if (audioRef.current.playbackRate > 0.75) {
+      audioRef.current.play();
+    }
+  }
+
+  // listen for the input event on the slider
+  useEffect(() => {
+    sliderRef.current.addEventListener("input", handleSliderInput);
+  }, []);
 
 
 
@@ -127,8 +151,16 @@ export default function Slider() {
     
     <p>Use the right trigger on your connected gamepad to control the playback speed. It will pause if the trigger is released</p> 
     <p>You may need to interact with the document (click anywhere) before the browser will allow the audio to play. <a href='https://developer.chrome.com/blog/autoplay/'>More info.</a> </p>
-    
 
+    
+    
+    <div className={styles.audiobookCard}>
+      <h2>Moby Dick</h2>
+      <h3>Chapter 1</h3>
+      <img src="https://th.bing.com/th/id/OIG.XPbmbHFKrR8FydeNjx2o"/>
+      <h4>Herman Melville</h4>
+      <h5>Narrator: Stewart Wills</h5>
+    </div>
     <p>0.75x
     <input
       type="range"
@@ -137,14 +169,18 @@ export default function Slider() {
       min="0.75"
       max="3"
       step="0.01"
-      touch-action="pan-y"
-      style={{ touchAction: "pan-y" }}
+      
+      
       aria-valuetext="Normal speed"
       ref={sliderRef}
     />3x</p>
     
     {/* start the playback speed at 0.5 */}
     <audio src="https://www.archive.org/download/moby_dick_librivox/mobydick_001_002_melville.mp3" controls autoPlay={false} preload="auto" />
+
+    <p>The cover art was generated in Bing Image Creator with the prompt: &quot;a white whale being controlled by a video game controller&quot;</p>
+    <p>You can listen to the rest of the audiobook here: <Link href="https://librivox.org/moby-dick-by-herman-melville/">LibriVox</Link> </p>
+    <p>This is just a quick demo. A few other features I&apos;d like to add are: skip ahead/back 30 seconds with the right/left bumper, volume control buttons, and a button to lock in the current playback speed.</p>
     </main>
 
     </>

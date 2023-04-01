@@ -1,0 +1,40 @@
+/* audiobookCard */
+.audiobookCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  /* don't want it too wide on desktop */
+  max-width: 400px;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
+  /* make the font look nicer */
+  font-family: 'Roboto', sans-serif;
+
+}
+.audiobookCard img {
+    width: 75%;
+
+}
+
+/* less space between h2 and h3 */
+.audiobookCard h2 {
+  margin-bottom: 0;
+  
+}
+.audiobookCard h3 {
+  margin-top: 0;
+}
+
+/* same with h4 and h5 */
+.audiobookCard h4 {
+  margin-bottom: 0;
+}
+.audiobookCard h5 {
+  margin-top: 0;
+}
