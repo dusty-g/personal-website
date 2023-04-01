@@ -16,7 +16,7 @@
     
     
 }
-.rejected {
+.rejected td{
     background-color: #ffcccc;
 }
 /* bold border around head */
