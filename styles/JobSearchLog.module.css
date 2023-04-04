@@ -25,4 +25,11 @@
     font-weight: bold;
     background-color: lightblue;
 }
+/* divider row that displays the week number between entries if they are separate weeks */
+.jobTable .weekNumber {
+    background-color: #ccc;
+    font-weight: bold;
+    text-align: center;
+    font-size: 14px;
+}
 
