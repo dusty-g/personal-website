@@ -8,22 +8,12 @@ import { ref, onValue } from "firebase/database";
 //import db from _app.tsx
 import { db } from 'src/pages/_app'
 import Link from 'next/link';
+import React from 'react';
 
 export default function JobSearchLog() {
     // get data from firebase. need to set types. fixed in next line
     const [jobData, setJobData] = useState<any[]>([]);
     useEffect(() => {
-        
-        // const dbRef = ref(db, 'jobs');
-        // onValue(dbRef, (snapshot) => {
-        //     const data = snapshot.val();
-        //     const jobData = [];
-        //     for (let key in data) {
-        //         jobData.push({ id: key, ...data[key] });
-        //     }
-        //     setJobData(jobData);
-        // });
-
         // get data from firebase sorted by dateApplied
         const dbRef = ref(db, 'jobs');
         onValue(dbRef, (snapshot) => {
@@ -41,23 +31,16 @@ export default function JobSearchLog() {
         );
     }, []);
 
-    // a function that takes in two dates and returns if they are in the same week or not
+    // a function that takes in two dates and returns if they are in the same week or not. Week starts on Sunday
     function isSameWeek(d1: Date, d2: Date) {
-        // Copy date so don't modify original
-        d1 = new Date(Date.UTC(d1.getFullYear(), d1.getMonth(), d1.getDate()));
-        d2 = new Date(Date.UTC(d2.getFullYear(), d2.getMonth(), d2.getDate()));
-        // Set to nearest Thursday: current date + 4 - current day number
-        // Make Sunday's day number 7
-        d1.setUTCDate(d1.getUTCDate() + 4 - (d1.getUTCDay()||7));
-        d2.setUTCDate(d2.getUTCDate() + 4 - (d2.getUTCDay()||7));
-        // Get first day of year
-        var yearStart1 = new Date(Date.UTC(d1.getUTCFullYear(),0,1));
-        var yearStart2 = new Date(Date.UTC(d2.getUTCFullYear(),0,1));
-        // Calculate full weeks to nearest Thursday
-        var weekNo1 = Math.ceil(( ( (d1.getTime() - yearStart1.getTime()) / 86400000) + 1)/7)
-        var weekNo2 = Math.ceil(( ( (d2.getTime() - yearStart2.getTime()) / 86400000) + 1)/7)
-        // Return if same week
-        return weekNo1 === weekNo2;
+        // use days since March 19th 2023 mod 7 to get the week of unemployment and compare
+        const week1 = Math.floor((d1.getTime() - new Date('March 19, 2023').getTime()) / (1000 * 60 * 60 * 24 * 7));
+        const week2 = Math.floor((d2.getTime() - new Date('March 19, 2023').getTime()) / (1000 * 60 * 60 * 24 * 7));
+        return week1 === week2;
+    }
+    // calculate weeks since March 19th 2023
+    function unemploymentWeekNumber(date: Date) {
+        return Math.floor((date.getTime() - new Date('2023-03-19').getTime()) / (1000 * 60 * 60 * 24 * 7)) + 1;
     }
     
     return (
@@ -77,7 +60,7 @@ export default function JobSearchLog() {
         {/* table of job applications retrieved from firebase */}
         <table className={styles.jobTable}>
             <thead>
-                <tr>
+                <tr key={"header"}>
                     <th>Company</th>
                     <th>Job Title</th>
                     {/* <th>Job Description</th> */}
@@ -92,20 +75,20 @@ export default function JobSearchLog() {
                 {/* get data from firebase */}
                 {jobData.map((job, index) => {
                     let isNewWeek = false;
-                    let weekNum = 1;
+                    let weekNum = unemploymentWeekNumber(new Date(job.dateApplied))
                     // if the job is not the first job in the array, check if it is in the same week as the previous job using the isSameWeek function
                     if (index > 0) {
                         // if the job is not in the same week as the previous job, set isNewWeek to true
                         if (!isSameWeek(new Date(job.dateApplied), new Date(jobData[index - 1].dateApplied))) {
                             isNewWeek = true;
-                            weekNum++;
                         }
                     }
 
                     
                     return (
-                    <>
+                    <React.Fragment key={job.id + "fragment"}>
                         
+                        {(isNewWeek) && <tr key={"week" + weekNum+1}><td colSpan={5} className={styles.weekNumber}>Week {weekNum + 1}</td></tr>}
                         {/* add conditional class for rejected applications */}
                         <tr key={job.id} className={job.applicationStatus === 'Rejected' ? styles.rejected : ''}>
                             <td>{job.companyName}</td>
@@ -113,14 +96,14 @@ export default function JobSearchLog() {
                             {/* <td>{job.jobTitle}</td> */}
                             <td><Link href={job.url}>{job.jobTitle}</Link></td>
                             {/* <td>{job.jobDescription}</td> */}
-                            {/* format date to just month/day, no year */}
-                            <td>{new Date(job.dateApplied).toLocaleDateString('en-US', {month: 'short', day: 'numeric'})}</td>
+                            <td>{job.dateApplied}</td>
                             <td>{job.applicationStatus}</td>
                             <td className={styles.wordBreak}>{job.notes}</td>
                         </tr>
-                        {/* if the job is in a new week, add a new row with the with the week number */}
-                        {(isNewWeek || index==jobData.length-1) && <tr><td colSpan={5} className={styles.weekNumber}>Week {weekNum}</td></tr>}
-                    </>
+                        {/* add a week number (week 1) row after the last job in the array */}
+                        {(index==jobData.length-1) && <tr key="week1"><td colSpan={5} className={styles.weekNumber}>Week 1</td></tr>}
+
+                    </React.Fragment>
                 )
                 })}
                 
