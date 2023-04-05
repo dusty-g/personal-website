@@ -88,7 +88,7 @@ export default function JobSearchLog() {
                     return (
                     <React.Fragment key={job.id + "fragment"}>
                         
-                        {(isNewWeek) && <tr key={"week" + weekNum+1}><td colSpan={5} className={styles.weekNumber}>Week {weekNum + 1}</td></tr>}
+                        {(isNewWeek) && <tr key={"week" + weekNum+1}><td colSpan={5} className={styles.weekNumber}>&#8593;&nbsp;Week {weekNum + 1}&nbsp;&#8593;</td></tr>}
                         {/* add conditional class for rejected applications */}
                         <tr key={job.id} className={job.applicationStatus === 'Rejected' ? styles.rejected : ''}>
                             <td>{job.companyName}</td>
@@ -101,7 +101,7 @@ export default function JobSearchLog() {
                             <td className={styles.wordBreak}>{job.notes}</td>
                         </tr>
                         {/* add a week number (week 1) row after the last job in the array */}
-                        {(index==jobData.length-1) && <tr key="week1"><td colSpan={5} className={styles.weekNumber}>Week 1</td></tr>}
+                        {(index==jobData.length-1) && <tr key="week1"><td colSpan={5} className={styles.weekNumber}>&#8593;&nbsp;Week 1&nbsp;&#8593;</td></tr>}
 
                     </React.Fragment>
                 )
