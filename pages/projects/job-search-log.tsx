@@ -55,8 +55,10 @@ export default function JobSearchLog() {
         <main className='main'>
         <h1>Job Search Log</h1>
         {/* description */}
-        <p>I am using Google Firebase Realtime Database, which is a NoSQL database. I am using the React library for Firebase to retrieve data from the database and display it on the page.</p>
-        <p>I add new entries to the database using a form on the <Link href="/projects/job-search-log/new">Create New Job Log</Link> page. I use Google Authentication to sign in with my Google account. The database is configured to only allow my account to write to the database.</p>
+        <div className={styles.description}>
+        <p>This is a list of jobs I&apos;ve applied to since beginning my job search on March 19th, 2023.</p>
+        <p>The Job Title links to the job posting.</p>
+        </div>
         {/* table of job applications retrieved from firebase */}
         <table className={styles.jobTable}>
             <thead>
@@ -109,6 +111,9 @@ export default function JobSearchLog() {
                 
             </tbody>
         </table>
+        <div className={styles.description}>
+        <p>This project uses Google Firebase Realtime Database, which is a NoSQL database. The React library for Firebase is used to retrieve data from the database and display it on the page.</p> <p>New entries to the database are added using a form on the <Link href="/projects/job-search-log/new">Create New Job Log</Link> page. Google Authentication is used to sign in with a Google account. The database is configured to only allow a specific account (mine) to write to the database.</p>
+        </div>
         </main>
         </>
     )
