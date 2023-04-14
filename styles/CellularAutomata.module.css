@@ -1,6 +1,12 @@
 .text {
     text-align: left;
 }
+.caption {
+    /* make it smaller with less top margin */
+    font-size: 0.8rem;
+    margin-top: 0rem;
+
+}
 
 .automataMain {
     /* display: flex; */
