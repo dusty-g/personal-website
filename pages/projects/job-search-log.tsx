@@ -58,6 +58,8 @@ export default function JobSearchLog() {
         <div className={styles.description}>
         <p>This is a list of jobs I&apos;ve applied to since beginning my job search on March 19th, 2023.</p>
         <p>The Job Title links to the job posting.</p>
+        {/* add a color key for the application statuses */}
+        <p className={styles.key}><span className={styles.interview}>Moving Forward</span> <span className={styles.rejected}>Rejected</span> <span className={styles.stale}>No response for &gt; 21 days</span></p>
         </div>
         {/* table of job applications retrieved from firebase */}
         <table className={styles.jobTable}>
@@ -85,14 +87,24 @@ export default function JobSearchLog() {
                             isNewWeek = true;
                         }
                     }
-
+                    let rowClass = '';
+                    if (job.applicationStatus === 'Rejected') {
+                        rowClass = styles.rejected;
+                    } else if (job.applicationStatus === 'Interview' || job.applicationStatus === 'Completed Assessment') {
+                        rowClass = styles.interview;
+                    }
+                    // if it has been more than 20 days since date applied, add a class to the row
+                    else if (new Date(job.dateApplied).getTime() + (1000 * 60 * 60 * 24 * 21) < new Date().getTime()) {
+                        rowClass = styles.stale;
+                    }
+                
                     
                     return (
                     <React.Fragment key={job.id + "fragment"}>
                         
                         {(isNewWeek) && <tr key={"week" + weekNum+1}><td colSpan={5} className={styles.weekNumber}>&#8593;&nbsp;Week {weekNum + 1}&nbsp;&#8593;</td></tr>}
                         {/* add conditional class for rejected applications */}
-                        <tr key={job.id} className={job.applicationStatus === 'Rejected' ? styles.rejected : ''}>
+                        <tr key={job.id} className={rowClass}>
                             <td>{job.companyName}</td>
                             {/* add a link to job.url */}
                             {/* <td>{job.jobTitle}</td> */}

@@ -16,8 +16,31 @@
     
     
 }
+.key span {
+    /* add a border for the style keys */
+    border: 1px solid #ccc;
+    padding: 2px;
+    margin: 2px;
+    /* text bold */
+    font-weight: bold;
+}
 .rejected td{
     background-color: #ffcccc;
+}
+.rejected {
+    background-color: #ffcccc;
+}
+.stale {
+    background-color: #ffffcc;
+}
+.interview td{
+    background-color: #ccffcc;
+}
+.interview {
+    background-color: #ccffcc;
+}
+.stale td{
+    background-color: #ffffcc;
 }
 /* bold border around head */
 .jobTable th {
