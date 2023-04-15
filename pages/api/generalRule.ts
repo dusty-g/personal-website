@@ -1,12 +1,20 @@
 // generate cellular automata rules based on input number (convert to binary)
-export function generateRule(numCols: number, numRows: number, ruleNum: number) {
+export function generateRule(numCols: number, numRows: number, ruleNum: number, firstRowIsRandom: boolean) {
+
     // create an empty 2D array with "numRows" rows and "numCols" columns, initialized with 0s
     const grid = Array(numRows)
         .fill(0)
         .map(() => Array(numCols).fill(0));
     
     // set the middle of the first row to 1
-    grid[Math.floor(numCols / 2)][0] = 1;
+    // grid[Math.floor(numCols / 2)][0] = 1;
+    if (firstRowIsRandom) {
+        for (let col = 0; col < numCols; col++) {
+            grid[col][0] = Math.random() > 0.5 ? 1 : 0;
+        }
+    } else {
+        grid[Math.floor(numCols / 2)][0] = 1;
+    }
     
     // loop through each row, starting at the second row
     for (let row = 1; row < numRows; row++) {

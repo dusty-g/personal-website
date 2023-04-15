@@ -59,7 +59,7 @@ export default function JobSearchLog() {
         <p>This is a list of jobs I&apos;ve applied to since beginning my job search on March 19th, 2023.</p>
         <p>The Job Title links to the job posting.</p>
         {/* add a color key for the application statuses */}
-        <p className={styles.key}><span className={styles.interview}>Moving Forward</span> <span className={styles.rejected}>Rejected</span> <span className={styles.stale}>No response for &gt; 21 days</span></p>
+        <p className={styles.key}><span className={styles.interview}>Moving Forward</span> <span className={styles.rejected}>Rejected</span> <span className={styles.stale}>No response &gt; 21 days</span></p>
         </div>
         {/* table of job applications retrieved from firebase */}
         <table className={styles.jobTable}>
