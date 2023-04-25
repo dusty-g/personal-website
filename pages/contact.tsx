@@ -16,7 +16,6 @@ export default function Contact() {
         <Nav />
         <main className="main">
             <h1>Contact</h1>
-            <p>🚧Note: this page is a work in progress🚧</p>
         
            
             
