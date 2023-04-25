@@ -111,7 +111,7 @@ export default function JobSearchLog() {
                             <td><Link href={job.url}>{job.jobTitle}</Link></td>
                             {/* <td>{job.jobDescription}</td> */}
                             <td>{job.dateApplied}</td>
-                            <td>{job.applicationStatus}</td>
+                            <td><Link href={"/projects/job-search-log/new/" + job.id}>{job.applicationStatus}</Link></td>
                             <td className={styles.wordBreak}>{job.notes}</td>
                         </tr>
                         {/* add a week number (week 1) row after the last job in the array */}
@@ -124,7 +124,7 @@ export default function JobSearchLog() {
             </tbody>
         </table>
         <div className={styles.description}>
-        <p>This project uses Google Firebase Realtime Database, which is a NoSQL database. The React library for Firebase is used to retrieve data from the database and display it on the page.</p> <p>New entries to the database are added using a form on the <Link href="/projects/job-search-log/new">Create New Job Log</Link> page. Google Authentication is used to sign in with a Google account. The database is configured to only allow a specific account (mine) to write to the database.</p>
+        <p>This project uses Google Firebase Realtime Database, which is a NoSQL database. The React library for Firebase is used to retrieve data from the database and display it on the page.</p> <p>New entries to the database are added using a form on the <Link href="/projects/job-search-log/newJobEntry">Create New Job Log</Link> page. Google Authentication is used to sign in with a Google account. The database is configured to only allow a specific account (mine) to write to the database.</p>
         </div>
         </main>
         </>
