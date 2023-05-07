@@ -2,7 +2,8 @@ import Head from "next/head";
 import Image from "next/image";
 import Nav from "src/components/nav";
 import styles from "../styles/About.module.css";
-import profilePic from "../public/dusty2.jpg";
+import amazon_logo from "../public/amazon_logo.jpeg";
+import jabil_logo from "../public/jabil.jpeg"
 
 //placeholder for about page
 export default function About() {
@@ -34,7 +35,7 @@ export default function About() {
             <h2>Work Experience</h2>
             <hr className={styles.boldLine}/>
             <div className={styles.employerContainer}>
-            <img src="https://media.licdn.com/dms/image/C560BAQHTvZwCx4p2Qg/company-logo_100_100/0/1612205615891?e=1683158400&v=beta&t=_7JS-HkS5H7O8IbLfuUCciqO_blsO0xjR_ATBKAK8Zs"></img><div><h3>Amazon.com</h3><p>Jul 2019 - Mar 2023</p></div></div>
+            <Image src={amazon_logo} alt={"Amazon Logo"}></Image><div><h3>Amazon.com</h3><p>Jul 2019 - Mar 2023</p></div></div>
             
             <h4>Software Development Engineer</h4>
             <p className={styles.dates}>Jan 2021 - March 2023</p>
@@ -50,7 +51,7 @@ export default function About() {
               <li><p>Followed safety protocols and regulations to ensure compliance and minimize risks</p></li>
             </ul>
             <hr className={styles.boldLine}/>
-            <div className={styles.employerContainer}><img src="https://media.licdn.com/dms/image/C560BAQGYO9Q1rEKrpg/company-logo_100_100/0/1600949156478?e=1683158400&v=beta&t=ptNySF2o32Inh3t2JGZmVwS3DBhvEH-Eam85meVx8Hs"/><div><h3>Jabil</h3><p>Apr 2018 - Jul 2019</p></div></div>
+            <div className={styles.employerContainer}><Image src={jabil_logo} alt={"Jabil Logo"}/><div><h3>Jabil</h3><p>Apr 2018 - Jul 2019</p></div></div>
             <h4>Additive Manufacturing Technician</h4>
             <ul>
               <li><p>Configured and optimized build parameters and settings for various polymer materials and geometries</p></li>
