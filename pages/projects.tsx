@@ -24,6 +24,7 @@ export default function Projects() {
             <li><h3>Small/Fun projects</h3>
                     <ul>
                         <li><Link href="projects/job-search-log">Job Search Log</Link></li>
+                        <li><Link href="/chat">Résumé Bot</Link><ul><li>A chatbot &quot;trained&quot; on my résumé, built with OpenAI&apos;s Chat API.</li></ul></li>
                         <li>This website! 
                     <ul>
                         <li>Built using Next.js</li>
