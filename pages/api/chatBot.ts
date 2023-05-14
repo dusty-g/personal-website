@@ -3,7 +3,7 @@ import { Configuration, OpenAIApi } from 'openai';
 
 // Initialize OpenAI API
 const configuration = new Configuration({
-  organization: 'org-tN5rzYgSQuN9JdECrNvLG5ci',
+
   apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
@@ -68,7 +68,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     let temp_messages = [...req.body.messages];
     temp_messages.unshift(systemContext);
-    console.log(temp_messages)
     const completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: temp_messages,
