@@ -1,22 +1,31 @@
-// blog page
-import Head from 'next/head'
-import Link from 'next/link'
-import Nav from 'src/components/nav'
+import { GetStaticProps } from 'next';
+import Link from 'next/link';
+import { getSortedPostsData, PostData } from '../utils/posts';
 
-export default function Blog() {
-    return (
-        <>
-        <Head>
-            <title>Blog</title>
-            <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <Nav />
-        <h1>Blog</h1>
-        {/* list of blog posts */}
-        <ul>
-            <li><Link href="/blog/report">test post</Link></li>
-        </ul>
-        </>
-    )
-    }
+export default function Blog({ allPostsData }: { allPostsData: PostData[] }) {
+  return (
+    <div>
+      <h1>My Blog</h1>
+      <ul>
+        {allPostsData.map(({ id, date, title }) => (
+          <li key={id}>
+            <Link href={`/blog/${id}`}>
+              {title}
+            </Link>
+            <br />
+            <small>{date}</small>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  const allPostsData = getSortedPostsData();
+  return {
+    props: {
+      allPostsData,
+    },
+  };
+};
