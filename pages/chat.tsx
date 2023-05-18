@@ -37,7 +37,7 @@ export default function Chat() {
       </Head>
       <Nav />
       <main className="main">
-        <h3>Résumé Bot</h3>
+        <h1>Résumé Bot</h1>
         <div className={styles.conversation}>
         {messages.map(
             (message, index: number) => (
