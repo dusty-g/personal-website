@@ -70,7 +70,7 @@ export default function JobSearchLog() {
                     {/* <th>Job Description</th> */}
                     <th>Date Applied</th>
                     <th>Application Status</th>
-                    <th>Notes</th>
+                    <th>Salary</th>
                 </tr>
             </thead>
             <tbody>
@@ -112,7 +112,7 @@ export default function JobSearchLog() {
                             {/* <td>{job.jobDescription}</td> */}
                             <td>{job.dateApplied}</td>
                             <td><Link href={"/projects/job-search-log/new/" + job.id}>{job.applicationStatus}</Link></td>
-                            <td className={styles.wordBreak}>{job.notes}</td>
+                            <td className={styles.wordBreak}>{job.salary}</td>
                         </tr>
                         {/* add a week number (week 1) row after the last job in the array */}
                         {(index==jobData.length-1) && <tr key="week1"><td colSpan={5} className={styles.weekNumber}>&#8593;&nbsp;Week 1&nbsp;&#8593;</td></tr>}

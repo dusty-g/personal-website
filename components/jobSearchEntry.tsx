@@ -54,7 +54,6 @@ export function useAuth() : Auth | null{
     }, [auth]);
    
     // get database reference if mode is "update"
-    console.log("ID: " + jobSearchEntryId);
     const databaseRef = mode === "update" ? ref(db, `jobs/${jobSearchEntryId}`) : null;
     // Use the useObjectVal hook to get the data, loading indicator, and error object
     const [data, loading, error] = useObjectVal<any>(databaseRef);
@@ -66,7 +65,7 @@ export function useAuth() : Auth | null{
     const [jobDescription, setJobDescription] = useState('');
     const [dateApplied, setDateApplied] = useState('');
     const [applicationStatus, setApplicationStatus] = useState('');
-    const [notes, setNotes] = useState('');
+    const [salary, setSalary] = useState('');
     // if mode is "update", then pre-populate the form with the existing data
     useEffect(() => {
       if(!loading){
@@ -77,7 +76,7 @@ export function useAuth() : Auth | null{
             setJobDescription(data.jobDescription);
             setDateApplied(data.dateApplied);
             setApplicationStatus(data.applicationStatus);
-            setNotes(data.notes);
+            setSalary(data.salary);
           }
       }  
       
@@ -90,7 +89,7 @@ export function useAuth() : Auth | null{
     const [jobDescriptionError, setJobDescriptionError] = useState('');
     const [dateAppliedError, setDateAppliedError] = useState('');
     const [applicationStatusError, setApplicationStatusError] = useState('');
-    const [notesError, setNotesError] = useState('');
+    const [salaryError, setsalaryError] = useState('');
     // set state for form submission
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submissionError, setSubmissionError] = useState('');
@@ -108,7 +107,7 @@ export function useAuth() : Auth | null{
       setJobDescriptionError('');
       setDateAppliedError('');
       setApplicationStatusError('');
-      setNotesError('');
+      setsalaryError('');
       // set error state if form is invalid
       if (companyName === '') {
           setCompanyNameError('Company Name is required');
@@ -129,9 +128,9 @@ export function useAuth() : Auth | null{
           setApplicationStatusError('Application Status is required');
       }
       
-      // commented out because notes are not required
-      // if (notes === '') {
-      //     setNotesError('Notes is required');
+      // commented out because salary are not required
+      // if (salary === '') {
+      //     setsalaryError('salary is required');
       // }
       // if form is valid, then submit form
       if (companyName && jobTitle && jobUrl && jobDescription && dateApplied && applicationStatus) {
@@ -148,7 +147,7 @@ export function useAuth() : Auth | null{
             jobDescription: jobDescription,
             dateApplied: dateApplied,
             applicationStatus: applicationStatus,
-            notes: notes
+            salary: salary
         };
         // push new job to firebase database
         push(ref(db, 'jobs'), newJob)
@@ -164,7 +163,7 @@ export function useAuth() : Auth | null{
             setJobDescription('');
             setDateApplied('');
             setApplicationStatus('');
-            setNotes('');
+            setSalary('');
         }
         ).catch((error) => {
           // set isSubmitting to false to enable form
@@ -180,7 +179,7 @@ export function useAuth() : Auth | null{
       setJobDescription('');
       setDateApplied('');
       setApplicationStatus('');
-      setNotes('');
+      setSalary('');
       // redirect to job search log page
       router.push('/projects/job-search-log');
     } else if(mode === "update"){
@@ -192,7 +191,7 @@ export function useAuth() : Auth | null{
         jobDescription: jobDescription,
         dateApplied: dateApplied,
         applicationStatus: applicationStatus,
-        notes: notes
+        salary: salary
     };
     // update existing job in firebase database
     update(ref(db, `jobs/${jobSearchEntryId}`), updatedJob)
@@ -330,20 +329,24 @@ function signIn(): void {
                 </select>
                 {/* display error message if applicationStatusError is not empty */}
                 {applicationStatusError && <p className={styles.error}>{applicationStatusError}</p>}
-                <label htmlFor="notes">Notes</label>
+                <label htmlFor="salary">salary</label>
                 <textarea
-                    id="notes"
-                    name="notes"
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
+                    id="salary"
+                    name="salary"
+                    value={salary}
+                    onChange={(e) => setSalary(e.target.value)}
                 />
-                {/* display error message if notesError is not empty */}
-                {notesError && <p>{notesError}</p>}
+                {/* display error message if salaryError is not empty */}
+                {salaryError && <p>{salaryError}</p>}
                 
                 <button type="submit" disabled={isSubmitting}>
                 Submit
                 </button>
-                {auth?.currentUser?.email !== "dustygalindo@gmail.com" && (<p className={styles.error}>You can click submit if you want to test the input validation (all fields required except &apos;notes&apos;). If the validation passes you&apos;ll be redirected to the Job Search Log page (the submission will be rejected by the database rules).</p>)}
+                {auth?.currentUser?.email !== "dustygalindo@gmail.com" && (<p className={styles.error}>You can click submit if you want to test the input validation (all fields required except &apos;salary&apos;). If the validation passes you&apos;ll be redirected to the Job Search Log page (the submission will be rejected by the database rules).</p>)}
+
+            </form>
+
+            <form>
 
             </form>
             
