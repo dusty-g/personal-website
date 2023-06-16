@@ -21,7 +21,6 @@ newJob = {
             jobTitle: string,
             url: string,
             jobDescription: string,
-            dateApplied: string,
             applicationStatus: string,
             salary: string
         }
@@ -32,7 +31,7 @@ dateApplied should be today's date in the format 'YYYY/MM/DD'
 
 Try to keep the jobDescription as brief as possible. ex: "Front-End Software Engineer at Amazon working on the Kindle team"
 
-'salary' may be a range like $85,000 - $120,000. Leave out things like "+bonus".
+'salary' may be a range like $85,000 - $120,000. Leave out things like "+bonus". The user is in Washington if there are different ranges for different states.
 
 'applicationStatus' should be "Applied".
 

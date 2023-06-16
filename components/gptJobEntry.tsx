@@ -2,6 +2,7 @@ import { getAuth, signInWithPopup, GoogleAuthProvider, Auth, User } from "fireba
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import Nav from "./nav";
+import JobSearchLogEntry from "./jobSearchEntry";
 
 const provider = new GoogleAuthProvider();
 // create a custom hook to get the firebase auth instance
@@ -17,7 +18,14 @@ export function useAuth() : Auth | null{
   
     return auth;
   }
-  
+  interface Job {
+    companyName: string;
+    jobTitle: string;
+    url: string;
+    jobDescription: string;
+    applicationStatus: string;
+    salary: string;
+  }
 
 export default function GptJobEntry(){
     const auth = useAuth();
@@ -37,6 +45,9 @@ export default function GptJobEntry(){
 
     const [inputValue, setInputValue] = useState("");
     const [messages, setMessages] = useState([{role:"assistant", content:"Paste the job description below"}]);
+    const [newJob, setNewJob] = useState<Job | null>(null);
+
+
     async function onSubmit(e: any) {
         e.preventDefault();
         const userMessage = { role: "user", content: inputValue };
@@ -51,6 +62,11 @@ export default function GptJobEntry(){
           });
           const data = await response.json();
           console.log(data)
+          const jobData = JSON.parse(data.content)
+
+          if(jobData?.companyName){
+            setNewJob(jobData)
+          }
           setMessages([...updatedMessages, data])
         } catch (error) {
           console.error('Error:', error);
@@ -97,7 +113,12 @@ export default function GptJobEntry(){
             )
         )}
         </div>
-            
+        {newJob && (
+        <JobSearchLogEntry
+          mode="gpt"
+          jobData={newJob}
+        />
+      )}
             <form onSubmit={onSubmit}>
                 <textarea
                 placeholder="paste job description here"
@@ -106,6 +127,7 @@ export default function GptJobEntry(){
                 />
                 <input type="submit" value="Submit"/>
             </form>
+            
         </main>
         </>
       )

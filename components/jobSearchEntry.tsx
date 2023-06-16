@@ -36,7 +36,7 @@ export function useAuth() : Auth | null{
   // should take in "jobSearchEntry" as a prop, which will be the existing data if mode is "update"
   // should take in "jobSearchEntryId" as a prop, which will be the id of the existing data if mode is "update"
   // but if mode is "add", then jobSearchEntryId will be null
-    export default function JobSearchLogEntry({mode, jobSearchEntryId}: {mode: string, jobSearchEntryId?: string | string[]}) {
+    export default function JobSearchLogEntry({mode, jobSearchEntryId, jobData}: {mode: string, jobSearchEntryId?: string | string[], jobData?: any}) {
     const auth = useAuth();
     //subscribe to auth state changes
     const [user, setUser] = useState<User | null>(null);
@@ -77,10 +77,25 @@ export function useAuth() : Auth | null{
             setDateApplied(data.dateApplied);
             setApplicationStatus(data.applicationStatus);
             setSalary(data.salary);
-          }
+          } 
       }  
       
     }, [data]);
+    // if mode is "gpt", the pre-populate the form with the jobData data
+    useEffect(()=>{
+        if(mode === "gpt"){
+            if(jobData){
+                console.log(jobData)
+                setCompanyName(jobData.companyName);
+                setJobTitle(jobData.jobTitle);
+                setJobUrl(jobData.jobDescription);
+                setJobDescription(jobData.applicationStatus);
+                setSalary(jobData.salary)
+            }
+            
+
+        }
+    }, [jobData]);
     
     // set state for form validation
     const [companyNameError, setCompanyNameError] = useState('');
@@ -139,7 +154,7 @@ export function useAuth() : Auth | null{
         // set submissionError to empty string
         setSubmissionError('');
         // submit form to create or update job search entry
-        if(mode === "add"){
+        if(mode === "add" || mode === "gpt"){
           const newJob = {
             companyName: companyName,
             jobTitle: jobTitle,
@@ -240,7 +255,15 @@ function signIn(): void {
         <Nav />
         <main className='main'>
             {/* <h1>Create New Job Log</h1> */}
-            <h1>{mode === "add" ? "Create New Job Log" : "Update Job Log"}</h1>
+            {mode === "add" &&
+            <h1>Create New Job Entry</h1>}
+            {mode === "update" && 
+            <h1>Update Job Entry</h1>}
+            {mode === "gpt" &&
+            <h1>Job Description from ChatGPT</h1>
+            }
+
+            {/* <h1>{mode === "add" ? "Create New Job Log" : "Update Job Log"}</h1> */}
            
             {user && (<button onClick={() => auth?.signOut()}>Sign out {user.email}</button>)}
 
@@ -329,7 +352,7 @@ function signIn(): void {
                 </select>
                 {/* display error message if applicationStatusError is not empty */}
                 {applicationStatusError && <p className={styles.error}>{applicationStatusError}</p>}
-                <label htmlFor="salary">salary</label>
+                <label htmlFor="salary">Salary</label>
                 <textarea
                     id="salary"
                     name="salary"
