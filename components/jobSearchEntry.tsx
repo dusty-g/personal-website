@@ -247,6 +247,7 @@ function signIn(): void {
 
     return (
       <>
+      {/* todo: remove head and nav and add them to the parent page */}
         <Head>
             <title>Create New Job Log</title>
             <meta name="viewport" content="width=device-width, initial-scale=1" />

@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import JobSearchLogEntry from "src/components/jobSearchEntry";
-
+// todo: change this path name from new/ to update/
 export default function UpdateJobEntry() {
     // get the jobId from the URL
     const router = useRouter();
