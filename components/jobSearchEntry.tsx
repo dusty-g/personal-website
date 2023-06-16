@@ -88,8 +88,8 @@ export function useAuth() : Auth | null{
                 console.log(jobData)
                 setCompanyName(jobData.companyName);
                 setJobTitle(jobData.jobTitle);
-                setJobUrl(jobData.jobDescription);
-                setJobDescription(jobData.applicationStatus);
+                setJobUrl(jobData.jobUrl);
+                setJobDescription(jobData.jobDescription);
                 setSalary(jobData.salary)
             }
             
