@@ -58,12 +58,21 @@ export function useAuth() : Auth | null{
     // Use the useObjectVal hook to get the data, loading indicator, and error object
     const [data, loading, error] = useObjectVal<any>(databaseRef);
     
+    // Set dateApplied to today's date
+    const today = new Date();
+    const year = today.getFullYear().toString();
+    let month = (today.getMonth() + 1).toString();
+    let day = today.getDate().toString();
+    month = month.length === 1 ? '0' + month : month;
+    day = day.length === 1 ? '0' + day : day;
+    const formattedDate = `${year}-${month}-${day}`;
+
     // set state for form data
     const [companyName, setCompanyName] = useState('');
     const [jobTitle, setJobTitle] = useState('');
     const [jobUrl, setJobUrl] = useState('');
     const [jobDescription, setJobDescription] = useState('');
-    const [dateApplied, setDateApplied] = useState('');
+    const [dateApplied, setDateApplied] = useState(formattedDate);
     const [applicationStatus, setApplicationStatus] = useState('');
     const [salary, setSalary] = useState('');
     // if mode is "update", then pre-populate the form with the existing data
@@ -85,6 +94,10 @@ export function useAuth() : Auth | null{
     useEffect(()=>{
         if(mode === "gpt"){
             if(jobData){
+                
+
+                // Combine to get the desired format
+                const formattedDate = `${year}-${month}-${day}`;
                 console.log(jobData)
                 setCompanyName(jobData.companyName);
                 setJobTitle(jobData.jobTitle);

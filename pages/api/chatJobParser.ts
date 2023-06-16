@@ -19,7 +19,7 @@ The database has 'jobs' that have the following fields:
 newJob = {
             companyName: string,
             jobTitle: string,
-            url: string,
+            jobUrl: string,
             jobDescription: string,
             applicationStatus: string,
             salary: string
@@ -27,7 +27,7 @@ newJob = {
 
 If you are unable to find a given field in the text, just leave it out of the object.
 
-dateApplied should be today's date in the format 'YYYY/MM/DD'
+
 
 Try to keep the jobDescription as brief as possible. ex: "Front-End Software Engineer at Amazon working on the Kindle team"
 
