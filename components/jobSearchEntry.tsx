@@ -260,16 +260,9 @@ function signIn(): void {
 
     return (
       <>
-      {/* todo: remove head and nav and add them to the parent page */}
-        <Head>
-            <title>Create New Job Log</title>
-            <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <Nav />
-        <main className='main'>
-            {/* <h1>Create New Job Log</h1> */}
-            {mode === "add" &&
+
+         {/* <h1>Create New Job Log</h1> */}
+         {mode === "add" &&
             <h1>Create New Job Entry</h1>}
             {mode === "update" && 
             <h1>Update Job Entry</h1>}
@@ -387,7 +380,6 @@ function signIn(): void {
 
             </form>
             
-        </main>
 
         </>
     );

@@ -91,20 +91,13 @@ export default function GptJobEntry(){
         <Head>New Job Entry (GPT version)</Head>
         <Nav />
         <main className="main">
-        <h1>gpt job description parser</h1>
-        {user && (<button onClick={() => auth?.signOut()}>Sign out {user.email}</button>)}
-
-            {!user && (
-                // sign in button
-                <button onClick={() => signIn()}>Sign in with Google</button>)}
+        <h1>ChatGPT job description parser</h1>
+  
 
         <div >
         {messages.map(
             (message, index: number) => (
-            <div 
-                key={index}
-                
-            >
+            <div key={index}>
                 <span>{message.role === 'assistant' ? 'Bot: ': 'You: '}</span>
                 {message.role == 'user' && <span>job description...</span>}
                 {message.role === 'assistant' && <span>{message.content}</span>}
