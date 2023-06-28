@@ -58,9 +58,11 @@ export default function JobSearchLog() {
         <div className={styles.description}>
         <p>This is a list of jobs I&apos;ve applied to since beginning my job search on March 19th, 2023.</p>
         <p>The Job Title links to the job posting.</p>
+        <p>This project uses Firebase Realtime Database, which is a NoSQL database. The React library for Firebase is used to retrieve data from the database and display it on the page. <br></br>Google Authentication is used to sign in with a Google account. The database is configured to only allow a specific account (mine) to write to the database.</p>
+        <br></br>New entries to the database are added by using the ChatGPT API to parse job descriptions <Link href="/projects/job-search-log/newGptJobEntry">here</Link>.
+        </div>
         {/* add a color key for the application statuses */}
         <p className={styles.key}><span className={styles.interview}>Moving Forward</span> <span className={styles.rejected}>Rejected</span> <span className={styles.stale}>No response &gt; 21 days</span></p>
-        </div>
         {/* table of job applications retrieved from firebase */}
         <table className={styles.jobTable}>
             <thead>
@@ -123,9 +125,6 @@ export default function JobSearchLog() {
                 
             </tbody>
         </table>
-        <div className={styles.description}>
-        <p>This project uses Google Firebase Realtime Database, which is a NoSQL database. The React library for Firebase is used to retrieve data from the database and display it on the page.</p> <p>New entries to the database are added using a form on the <Link href="/projects/job-search-log/newJobEntry">Create New Job Log</Link> page. Google Authentication is used to sign in with a Google account. The database is configured to only allow a specific account (mine) to write to the database.</p>
-        </div>
         </main>
         </>
     )
