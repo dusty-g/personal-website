@@ -94,7 +94,7 @@ export default function JobSearchLog() {
                     let rowClass = '';
                     if (job.applicationStatus === 'Rejected') {
                         rowClass = styles.rejected;
-                    } else if (job.applicationStatus === 'Interview' || job.applicationStatus === 'Completed Assessment') {
+                    } else if (job.applicationStatus === 'Interviewing' || job.applicationStatus === 'Completed Assessment') {
                         rowClass = styles.interview;
                     }
                     // if it has been more than 20 days since date applied, add a class to the row

@@ -353,6 +353,7 @@ function signIn(): void {
                 >
                     <option value="">Select an Application Status</option>
                     <option value="Applied">Applied</option>
+                    <option value="Completed Assessment">Completed Assessment</option>
                     <option value="Interviewing">Interviewing</option>
                     <option value="Offer Received">Offer Received</option>
                     <option value="Rejected">Rejected</option>
