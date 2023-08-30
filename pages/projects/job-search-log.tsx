@@ -26,6 +26,7 @@ export default function JobSearchLog() {
             jobData.sort((a, b) => {
                 return new Date(b.dateApplied).getTime() - new Date(a.dateApplied).getTime();
             });
+            console.log("Total number of applications: " + jobData.length)
             setJobData(jobData);
         }
         );
