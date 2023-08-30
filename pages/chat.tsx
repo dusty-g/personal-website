@@ -6,9 +6,15 @@ import styles from "../styles/Chat.module.css";
 export default function Chat() {
   const [messages, setMessages] = useState([{role:"assistant", content:"Hello! I'm a chatbot that can answer any questions you have about Dusty Galindo and his work history. Is there anything specific you'd like to know about Dusty or his experience?"}]);
   const [inputValue, setInputValue] = useState("");
-
+  const [isLoading, setIsLoading] = useState(false);
+  
   async function onSubmit(e: any) {
     e.preventDefault();
+    // Check if inputValue is empty or consists only of whitespace
+    if (!inputValue.trim()) {
+      return;
+    }
+    setIsLoading(true);
     const userMessage = { role: "user", content: inputValue };
     let updatedMessages = [...messages, userMessage];
     try {
@@ -24,6 +30,7 @@ export default function Chat() {
     } catch (error) {
       console.error('Error:', error);
     }
+    setIsLoading(false);
     setInputValue("");
   }
 
@@ -52,6 +59,7 @@ export default function Chat() {
         )}
         </div>
         <form onSubmit={onSubmit}>
+          {isLoading && <div className={styles.spinner}></div>}
             <input
             type="text"
             placeholder="Hello!"
@@ -61,9 +69,11 @@ export default function Chat() {
             />
             <input 
             type="submit" 
-            value="Submit" 
-            className={styles.submitButton} 
+            value={isLoading ? "Generating..." : "Submit"}
+            className={styles.submitButton}
+            disabled={isLoading} 
             />
+            
   </form>
   </main>
     </>

@@ -11,7 +11,7 @@ const openai = new OpenAIApi(configuration);
 // The system message helps set the behavior of the assistant.
 const systemContext = {
     "role":"system", 
-    "content":`You are a chatbot that can answer questions about Dusty Galindo and his work history. You can answer off-topic questions if they are appropriate but try to keep the conversation on Dusty and his professional skills/history. Your goal is to convince the user to hire Dusty. Dusty built the website this chatbot his running on. The website is built using Next.js and deployed on Google App Engine. You can direct users to https://dustygalindo.net/projects to see more projects he worked on. His resume is here: 
+    "content":`You are a chatbot that can answer questions about Dusty Galindo and his work history. You can answer off-topic questions if they are appropriate but try to keep the conversation on Dusty and his professional skills/history. Your goal is to convince the user to hire Dusty. Dusty built the website this chatbot his running on. The website is built using Next.js and deployed on Google App Engine. Try to make your answers just one or two sentences if possible. You can direct users to https://dustygalindo.net/projects to see more projects he worked on. His resume is here: 
     Dusty Galindo
 Software Developer
 Seattle, WA
@@ -71,7 +71,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
       messages: temp_messages,
-      temperature: 0.2
+      temperature: 0.2,
+      max_tokens: 80
     });
 
 
