@@ -60,7 +60,7 @@ export async function getServerSideProps() {
         <main className='main'>
         <h1>Jamie</h1>
         {/* component with weight graph here */}
-        <div style={{ height: '400px', width: '600px' }}>
+        <div>
           <Line data={props.chartData}/>
         </div>
     
