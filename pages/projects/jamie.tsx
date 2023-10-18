@@ -1,6 +1,14 @@
+"use client";
 import Nav from 'src/components/nav'
 import Head from 'next/head'
-import { Line } from 'react-chartjs-2';
+
+
+
+import "chart.js/auto";
+
+import { Line } from "react-chartjs-2";
+
+
 
 // This function runs at request time on the server.
 export async function getServerSideProps() {
@@ -18,7 +26,7 @@ export async function getServerSideProps() {
         labels: dates,
         datasets: [
           {
-            label: 'Dog Weight Over Time',
+            label: "Jamie's Weight (lbs)",
             data: weights,
             fill: false,
             backgroundColor: 'rgb(255, 99, 132)',
@@ -26,6 +34,7 @@ export async function getServerSideProps() {
           },
         ],
       };
+      
   
     return {
       props: {
@@ -36,7 +45,7 @@ export async function getServerSideProps() {
 
   
 
-  export default function Jamie(props: any) {
+  export default function Jamie(props: { chartData: any }) {
     
     
     return (
@@ -49,10 +58,10 @@ export async function getServerSideProps() {
         <Nav />
         
         <main className='main'>
-        <h1>Dogsitting Jamie</h1>
+        <h1>Jamie</h1>
         {/* component with weight graph here */}
         <div style={{ height: '400px', width: '600px' }}>
-          <Line data={props.chartData} />
+          <Line data={props.chartData}/>
         </div>
     
         </main>
