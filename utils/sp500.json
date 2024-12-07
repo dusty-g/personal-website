@@ -5,7 +5,7 @@
     { "ticker": "GOOGL", "name": "Alphabet Inc." },
     { "ticker": "BRK.B", "name": "Berkshire Hathaway Inc." },
     { "ticker": "JNJ", "name": "Johnson & Johnson" },
-    { "ticker": "JPM", "name": "JPMorgan Chase & Co." },
+    { "ticker": "WMT", "name": "Walmart Inc." },
     { "ticker": "V", "name": "Visa Inc." },
     { "ticker": "PG", "name": "Procter & Gamble Co." },
     { "ticker": "TSLA", "name": "Tesla, Inc." }

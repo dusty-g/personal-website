@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import StockComparison from '../../../components/StockComparison';
 import { calculateElo, StockElo } from '../../../components/EloRating';
 import sp500 from '../../../utils/sp500.json'; // Ensure you have correct path
+import { useRouter } from 'next/router';
 
 // CONFIGURATION
 const TOTAL_COMPARISONS = 10;
@@ -11,6 +12,7 @@ export default function ComparePage() {
   const [eloRatings, setEloRatings] = useState<StockElo[]>([]);
   const [currentPair, setCurrentPair] = useState<{ stockA: any; stockB: any } | null>(null);
   const [comparisonsMade, setComparisonsMade] = useState(0);
+    const router = useRouter();
 
   useEffect(() => {
     // Initialize elo ratings if not set
@@ -23,13 +25,17 @@ export default function ComparePage() {
   useEffect(() => {
     if (eloRatings.length > 0 && comparisonsMade < TOTAL_COMPARISONS) {
       setCurrentPair(randomPair(sp500));
-    } else if (comparisonsMade >= TOTAL_COMPARISONS) {
-        //store elo ratings before redirect
-        sessionStorage.setItem('finalElo', JSON.stringify(eloRatings));
-      // Redirect to completion page
-      window.location.href = '/projects/sp500/completed';
-    }
+    } 
   }, [eloRatings, comparisonsMade]);
+
+  // New useEffect to handle redirection when comparisons are completed
+  useEffect(() => {
+    if (comparisonsMade >= TOTAL_COMPARISONS) {
+      // Store Elo ratings before redirect
+      sessionStorage.setItem('finalElo', JSON.stringify(eloRatings));
+      router.push('/projects/sp500/completed');
+    }
+  }, [comparisonsMade, eloRatings, router]);
 
   const onSelect = (selectedTicker: string) => {
     if (!currentPair) return;
@@ -50,7 +56,7 @@ export default function ComparePage() {
     updatedElo[loserIndex].rating = loserNew;
     setEloRatings(updatedElo);
 
-    setComparisonsMade(comparisonsMade + 1);
+    setComparisonsMade(prev => prev + 1);
   };
 
   // Helper to get random pair
@@ -75,6 +81,10 @@ export default function ComparePage() {
           totalSteps={TOTAL_COMPARISONS}
         />
       )}
+      {/* Attribution */}
+      <footer style={{ position: 'absolute', bottom: '1rem', width: '100%', textAlign: 'center', fontSize: '0.8rem' }}>
+        Logos provided by <a href="https://parqet.com" target="_blank" rel="noopener noreferrer">Parqet</a>.
+      </footer>
     </div>
   );
 }

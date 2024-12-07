@@ -10,6 +10,9 @@ export default function SP500HomePage() {
       <Link href="/projects/sp500/compare">
         <button>Start</button>
       </Link>
+
+      
+      
     </div>
   );
 }

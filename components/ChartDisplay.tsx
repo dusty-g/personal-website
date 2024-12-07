@@ -38,12 +38,40 @@ export default function ChartDisplay({ data }: ChartDisplayProps) {
     ]
   };
 
+  // Determine the minimum y-axis value
+  const minY = Math.min(...values) * .98; // Slightly below the smallest value for padding
+
   const options = {
     responsive: true,
     plugins: {
       title: {
         display: true,
         text: 'Portfolio Weights'
+      },
+      legend: {
+        display: false
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: false,
+        min: minY,
+        ticks: {
+          // Optional: Customize tick formatting
+          callback: function(value: any) {
+            return (value * 100).toFixed(2) + '%';
+          }
+        },
+        title: {
+          display: true,
+          text: 'Weight (%)'
+        }
+      },
+      x: {
+        title: {
+          display: true,
+          text: 'Stock Ticker'
+        }
       }
     }
   };
