@@ -1,0 +1,13 @@
+[
+    { "ticker": "AAPL", "name": "Apple Inc." },
+    { "ticker": "MSFT", "name": "Microsoft Corporation" },
+    { "ticker": "AMZN", "name": "Amazon.com, Inc." },
+    { "ticker": "GOOGL", "name": "Alphabet Inc." },
+    { "ticker": "BRK.B", "name": "Berkshire Hathaway Inc." },
+    { "ticker": "JNJ", "name": "Johnson & Johnson" },
+    { "ticker": "JPM", "name": "JPMorgan Chase & Co." },
+    { "ticker": "V", "name": "Visa Inc." },
+    { "ticker": "PG", "name": "Procter & Gamble Co." },
+    { "ticker": "TSLA", "name": "Tesla, Inc." }
+  ]
+  
