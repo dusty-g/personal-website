@@ -1,4 +1,5 @@
 // pages/projects/sp500/completed.tsx
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import ChartDisplay from '../../../components/ChartDisplay';
 import CSVDownload from '../../../components/CSVDownload';
@@ -33,9 +34,12 @@ export default function CompletedPage() {
           <CSVDownload data={portfolio} />
         </>
       )}
-      <div style={{ marginTop: '2rem' }}>
-        <a href="/projects/sp500">Finish</a>
-      </div>
+        <div style={{ marginTop: '2rem' }}>
+            <Link href="/projects/sp500" passHref>
+                <button>Finish</button>
+            </Link>
+        </div>
+
     </div>
   );
 }
