@@ -12,14 +12,13 @@ interface StockComparisonProps {
   stockB: Stock;
   onSelect: (selectedTicker: string) => void;
   currentStep: number;
-  totalSteps: number;
 }
 
 const handleImageError = (e: React.SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.src = '/images/Image-not-found.png';
   };
 
-export default function StockComparison({ stockA, stockB, onSelect, currentStep, totalSteps }: StockComparisonProps) {
+export default function StockComparison({ stockA, stockB, onSelect, currentStep }: StockComparisonProps) {
     //dynamic logo urls from parqet
     const logoURL = (ticker: string) => `https://assets.parqet.com/logos/symbol/${formatTicker(ticker)}`;
   
@@ -50,7 +49,7 @@ export default function StockComparison({ stockA, stockB, onSelect, currentStep,
       </div>
 
       <div style={{ position: 'absolute', top: '20px', right: '20px' }}>
-        <p>Comparisons Completed: {currentStep}/{totalSteps}</p>
+        
       </div>
     </div>
   );

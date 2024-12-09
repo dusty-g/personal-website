@@ -17,12 +17,14 @@ export default function CompletedPage() {
     if (finalEloData) {
       const finalElo: FinalRating[] = JSON.parse(finalEloData);
       // Convert Elo ratings to weights
-      // A common approach: weight = rating / sum_of_all_ratings
       const sum = finalElo.reduce((acc, s) => acc + s.rating, 0);
-      const weights = finalElo.map(s => ({ Symbol: s.Symbol, weight: s.rating / sum }));
+      const weights = finalElo
+        .map(s => ({ Symbol: s.Symbol, weight: s.rating / sum }))
+        .sort((a, b) => b.weight - a.weight); // Sort by weight (desc)
       setPortfolio(weights);
     }
   }, []);
+  
 
   return (
     <div style={{ padding: '2rem' }}>

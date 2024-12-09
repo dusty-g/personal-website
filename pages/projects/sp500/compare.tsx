@@ -1,18 +1,14 @@
-// pages/projects/sp500/compare.tsx
 import React, { useEffect, useState } from 'react';
 import StockComparison from '../../../components/StockComparison';
 import { calculateElo, StockElo } from '../../../components/EloRating';
 import sp500 from '../../../utils/sp500.json'; // Ensure you have correct path
 import { useRouter } from 'next/router';
 
-// CONFIGURATION
-const TOTAL_COMPARISONS = 10;
-
 export default function ComparePage() {
   const [eloRatings, setEloRatings] = useState<StockElo[]>([]);
   const [currentPair, setCurrentPair] = useState<{ stockA: any; stockB: any } | null>(null);
   const [comparisonsMade, setComparisonsMade] = useState(0);
-    const router = useRouter();
+  const router = useRouter();
 
   useEffect(() => {
     // Initialize elo ratings if not set
@@ -23,23 +19,15 @@ export default function ComparePage() {
   }, [eloRatings]);
 
   useEffect(() => {
-    if (eloRatings.length > 0 && comparisonsMade < TOTAL_COMPARISONS) {
+    if (eloRatings.length > 0) {
       setCurrentPair(randomPair(sp500));
-    } 
-  }, [eloRatings, comparisonsMade]);
-
-  // New useEffect to handle redirection when comparisons are completed
-  useEffect(() => {
-    if (comparisonsMade >= TOTAL_COMPARISONS) {
-      // Store Elo ratings before redirect
-      sessionStorage.setItem('finalElo', JSON.stringify(eloRatings));
-      router.push('/projects/sp500/completed');
     }
-  }, [comparisonsMade, eloRatings, router]);
+  }, [eloRatings, comparisonsMade]);
 
   const onSelect = (selectedTicker: string) => {
     if (!currentPair) return;
-    const loserTicker = (currentPair.stockA.Symbol === selectedTicker) ? currentPair.stockB.Symbol : currentPair.stockA.Symbol;
+    const loserTicker =
+      currentPair.stockA.Symbol === selectedTicker ? currentPair.stockB.Symbol : currentPair.stockA.Symbol;
 
     const winnerIndex = eloRatings.findIndex(s => s.Symbol === selectedTicker);
     const loserIndex = eloRatings.findIndex(s => s.Symbol === loserTicker);
@@ -59,7 +47,11 @@ export default function ComparePage() {
     setComparisonsMade(prev => prev + 1);
   };
 
-  // Helper to get random pair
+  const endComparisons = () => {
+    sessionStorage.setItem('finalElo', JSON.stringify(eloRatings));
+    router.push('/projects/sp500/completed');
+  };
+
   function randomPair(arr: any[]) {
     const clone = [...arr];
     const idxA = Math.floor(Math.random() * clone.length);
@@ -78,10 +70,12 @@ export default function ComparePage() {
           stockB={currentPair.stockB}
           onSelect={onSelect}
           currentStep={comparisonsMade}
-          totalSteps={TOTAL_COMPARISONS}
         />
       )}
-      {/* Attribution */}
+      <p>Comparisons Made: {comparisonsMade}</p>
+      <button onClick={endComparisons} style={{ marginTop: '1rem' }}>
+        End
+      </button>
       <footer style={{ position: 'absolute', bottom: '1rem', width: '100%', textAlign: 'center', fontSize: '0.8rem' }}>
         Logos provided by <a href="https://parqet.com" target="_blank" rel="noopener noreferrer">Parqet</a>.
       </footer>
