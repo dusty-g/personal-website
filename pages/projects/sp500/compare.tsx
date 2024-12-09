@@ -17,7 +17,7 @@ export default function ComparePage() {
   useEffect(() => {
     // Initialize elo ratings if not set
     if (eloRatings.length === 0) {
-      const initial = sp500.map(stock => ({ ticker: stock.ticker, rating: 1500 }));
+      const initial = sp500.map(stock => ({ Symbol: stock.Symbol, rating: 1500 }));
       setEloRatings(initial);
     }
   }, [eloRatings]);
@@ -39,10 +39,10 @@ export default function ComparePage() {
 
   const onSelect = (selectedTicker: string) => {
     if (!currentPair) return;
-    const loserTicker = (currentPair.stockA.ticker === selectedTicker) ? currentPair.stockB.ticker : currentPair.stockA.ticker;
+    const loserTicker = (currentPair.stockA.Symbol === selectedTicker) ? currentPair.stockB.Symbol : currentPair.stockA.Symbol;
 
-    const winnerIndex = eloRatings.findIndex(s => s.ticker === selectedTicker);
-    const loserIndex = eloRatings.findIndex(s => s.ticker === loserTicker);
+    const winnerIndex = eloRatings.findIndex(s => s.Symbol === selectedTicker);
+    const loserIndex = eloRatings.findIndex(s => s.Symbol === loserTicker);
 
     if (winnerIndex === -1 || loserIndex === -1) return;
 

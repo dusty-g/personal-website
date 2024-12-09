@@ -1,6 +1,6 @@
 // components/EloRating.ts
 export interface StockElo {
-    ticker: string;
+    Symbol: string;
     rating: number;
   }
   
