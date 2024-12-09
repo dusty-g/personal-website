@@ -2,14 +2,14 @@
 import React from 'react';
 
 interface CSVDownloadProps {
-  data: { ticker: string; weight: number }[];
+  data: { Symbol: string; weight: number }[];
 }
 
 export default function CSVDownload({ data }: CSVDownloadProps) {
   const handleDownload = () => {
     const rows = [
       ['Ticker', 'Weight'],
-      ...data.map(item => [item.ticker, item.weight.toString()])
+      ...data.map(item => [item.Symbol, item.weight.toString()])
     ];
     const csvContent = rows.map(e => e.join(',')).join('\n');
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });

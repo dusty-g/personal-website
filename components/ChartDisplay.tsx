@@ -20,11 +20,11 @@ ChartJS.register(
 );
 
 interface ChartDisplayProps {
-  data: { ticker: string; weight: number }[];
+  data: { Symbol: string; weight: number }[];
 }
 
 export default function ChartDisplay({ data }: ChartDisplayProps) {
-  const labels = data.map(item => item.ticker);
+  const labels = data.map(item => item.Symbol);
   const values = data.map(item => item.weight);
 
   const chartData = {

@@ -5,12 +5,12 @@ import ChartDisplay from '../../../components/ChartDisplay';
 import CSVDownload from '../../../components/CSVDownload';
 
 interface FinalRating {
-  ticker: string;
+  Symbol: string;
   rating: number;
 }
 
 export default function CompletedPage() {
-  const [portfolio, setPortfolio] = useState<{ticker: string; weight: number}[]>([]);
+  const [portfolio, setPortfolio] = useState<{Symbol: string; weight: number}[]>([]);
 
   useEffect(() => {
     const finalEloData = sessionStorage.getItem('finalElo');
@@ -19,7 +19,7 @@ export default function CompletedPage() {
       // Convert Elo ratings to weights
       // A common approach: weight = rating / sum_of_all_ratings
       const sum = finalElo.reduce((acc, s) => acc + s.rating, 0);
-      const weights = finalElo.map(s => ({ ticker: s.ticker, weight: s.rating / sum }));
+      const weights = finalElo.map(s => ({ Symbol: s.Symbol, weight: s.rating / sum }));
       setPortfolio(weights);
     }
   }, []);
