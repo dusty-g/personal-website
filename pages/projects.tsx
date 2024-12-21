@@ -23,6 +23,7 @@ export default function Projects() {
             <ul className={styles.projectsList}>
             <li><h3>Small/Fun projects</h3>
                     <ul>
+                        <li><Link href="projects/sp500">S&P 500 Portfolio Builder</Link><ul><li>Build a custom portfolio by comparing S&P 500 stocks using an Elo rating system.</li></ul></li>
                         <li><Link href="projects/job-search-log">Job Search Log</Link></li>
                         <li><Link href="/chat">Résumé Bot</Link><ul><li>A chatbot &quot;trained&quot; on my résumé, built with OpenAI&apos;s Chat API.</li></ul></li>
                         <li>This website! 
