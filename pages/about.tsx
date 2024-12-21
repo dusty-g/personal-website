@@ -34,6 +34,23 @@ export default function About() {
             <section>
             <h2>Work Experience</h2>
             <hr className={styles.boldLine}/>
+                        <div className={styles.employerContainer}>
+                <Image src="/images/Salesforce-Logo.jpeg" alt={"Salesforce Logo"} width={100} height={100}></Image>
+                <div>
+                    <h3>Salesforce</h3>
+                    <p>Nov 2023 - Present</p>
+                </div>
+            </div>
+
+            <h4>Technical Support Engineer</h4>
+            <p className={styles.dates}>Nov 2023 - Present</p>
+            <ul>
+                <li>
+                    <p>Support Marketing Cloud Engagement, specifically Mobile products such as MobileConnect (SMS marketing), MobilePush (push notifications and SDK support), and WhatsApp</p>
+                </li>
+            </ul>
+            <hr className={styles.boldLine}/>
+
             <div className={styles.employerContainer}>
             <Image src={amazon_logo} alt={"Amazon Logo"}></Image><div><h3>Amazon.com</h3><p>Jul 2019 - Mar 2023</p></div></div>
             

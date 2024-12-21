@@ -3,6 +3,8 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import ChartDisplay from '../../../components/ChartDisplay';
 import CSVDownload from '../../../components/CSVDownload';
+import Head from "next/head";
+import Nav from "src/components/nav";
 
 interface FinalRating {
   Symbol: string;
@@ -24,24 +26,31 @@ export default function CompletedPage() {
       setPortfolio(weights);
     }
   }, []);
-  
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h2>Your Final Portfolio</h2>
-      <p>This chart shows the weights of each stock based on your selections.</p>
-      {portfolio.length > 0 && (
-        <>
-          <ChartDisplay data={portfolio} />
-          <CSVDownload data={portfolio} />
-        </>
-      )}
+    <>
+      <Head>
+        <title>Completed Portfolio</title>
+        <meta name="description" content="Your final portfolio based on your selections." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <Nav />
+      <div style={{ padding: '2rem' }}>
+        <h2>Your Final Portfolio</h2>
+        <p>This chart shows the weights of each stock based on your selections.</p>
+        {portfolio.length > 0 && (
+          <>
+            <ChartDisplay data={portfolio} />
+            <CSVDownload data={portfolio} />
+          </>
+        )}
         <div style={{ marginTop: '2rem' }}>
-            <Link href="/projects/sp500" passHref>
-                <button>Finish</button>
-            </Link>
+          <Link href="/projects/sp500" passHref>
+            <button>Finish</button>
+          </Link>
         </div>
-
-    </div>
+      </div>
+    </>
   );
 }
