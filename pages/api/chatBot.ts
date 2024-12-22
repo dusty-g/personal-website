@@ -68,10 +68,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     let temp_messages = [...req.body.messages];
     temp_messages.unshift(systemContext);
     const completion = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4o-mini",
       messages: temp_messages,
       temperature: 0.2,
-      max_tokens: 80
+      max_tokens: 200
     });
 
 
