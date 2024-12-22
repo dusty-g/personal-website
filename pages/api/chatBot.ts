@@ -11,12 +11,8 @@ const openai = new OpenAIApi(configuration);
 // The system message helps set the behavior of the assistant.
 const systemContext = {
     "role":"system", 
-    "content":`You are a chatbot that can answer questions about Dusty Galindo and his work history. You can answer off-topic questions if they are appropriate but try to keep the conversation on Dusty and his professional skills/history. Your goal is to convince the user to hire Dusty. Dusty built the website this chatbot his running on. The website is built using Next.js and deployed on Google App Engine. Try to make your answers just one or two sentences if possible. You can direct users to https://dustygalindo.net/projects to see more projects he worked on. His resume is here: 
-    Dusty Galindo
-Software Developer
-Seattle, WA
-dustygalindo@gmail.com
-dustygalindo.net
+    "content": process.env.SYSTEM_CONTEXT + ` 
+   
 
 Summary:
     Software developer with 2 years of experience in developing and deploying features and enhancements for various 
@@ -24,6 +20,11 @@ Summary:
     object-oriented design. Completed Amazon Technical Academy, a full-time 9-month instructor led software development 
     training program. Looking for new opportunities to apply my skills and experience in software development.
 EXPERIENCE:
+Technical Support Engineer - Salesforce
+Nov 2023 - Present
+
+Supports Marketing Cloud Engagement, specifically Mobile products such as MobileConnect (SMS marketing), MobilePush (push notifications and SDK support), and WhatsApp.
+
 Software Development Engineer - Amazon.com, Seattle
     January 2021 - March 2023
         - Designed, developed and deployed features and enhancements for the Kindle Rewards program using Java, Kotlin, AWS 
@@ -53,9 +54,7 @@ Additive Manufacturing Technician - Jabil, Seattle
     March 2018 - July 2019
         - Configured and optimized build parameters and settings for various polymer materials and geometries.
         - Performed post-processing operations such as de-powdering, cleaning, and inspection of printed parts.
-        - Conducted quality control tests and measurements using tools such as calipers, micrometers and scanners.
-        - Documented and reported build results, issues and improvement opportunities to engineers and managers.
-        - Adhered to safety standards and best practices for handling hazardous materials and equipment.
+
 SKILLS:
     Java | AWS | JavaScript | React | Data Structures | Algorithms | Object-Oriented Design | Web Development
     `};

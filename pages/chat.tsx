@@ -4,7 +4,7 @@ import Nav from "src/components/nav";
 import styles from "../styles/Chat.module.css";
 
 export default function Chat() {
-  const [messages, setMessages] = useState([{role:"assistant", content:"Hello! I'm a chatbot that can answer any questions you have about Dusty Galindo and his work history. Is there anything specific you'd like to know about Dusty or his experience?"}]);
+  const [messages, setMessages] = useState([{role:"assistant", content:"Hello! I'm a chatbot that can answer questions you have about Dusty Galindo and his work history. Is there anything specific you'd like to know about Dusty or his experience?"}]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   
