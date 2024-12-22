@@ -1,12 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { Configuration, OpenAIApi } from 'openai';
+import OpenAI from 'openai';
 
 // Initialize OpenAI API
-const configuration = new Configuration({
+const openai = new OpenAI({
 
   apiKey: process.env.OPENAI_API_KEY,
 });
-const openai = new OpenAIApi(configuration);
 
 // The system message helps set the behavior of the assistant.
 const systemContext = {
@@ -67,7 +66,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     let temp_messages = [...req.body.messages];
     temp_messages.unshift(systemContext);
-    const completion = await openai.createChatCompletion({
+    const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: temp_messages,
       temperature: 0.2,
@@ -75,7 +74,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     });
 
 
-    res.status(200).json(completion.data.choices[0].message);
+    res.status(200).json(completion.choices[0].message);
   } catch (error) {
     console.error(error)
     res.status(500).json({ error: 'Something went wrong.' });
