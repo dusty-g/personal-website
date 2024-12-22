@@ -45,6 +45,8 @@ export default function Chat() {
       <Nav />
       <main className="main">
         <h1>Résumé Bot</h1>
+        <p className={styles.description}>This is using OpenAI's chat completion API with GPT-4o mini as the model. My resume and some instructions are provided as the "System message" and your input is sent as the "User message". Each response is capped at 500 tokens (rougly 1,000 characters) to keep costs down. The price for gpt-4o-mini is only $0.000600 / 1K output tokens! I've also set a monthly spending limit of $5/month just in case.</p>
+        <hr/>
         <div className={styles.conversation}>
         {messages.map(
             (message, index: number) => (

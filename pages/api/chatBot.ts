@@ -71,7 +71,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       model: "gpt-4o-mini",
       messages: temp_messages,
       temperature: 0.2,
-      max_tokens: 200
+      max_tokens: 500
     });
 
 
