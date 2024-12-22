@@ -11,6 +11,10 @@ let fireball = false;
 let fire_ball_image;
 let fire_count = 1000;
 let ball_size = 1;
+let enemy_img;
+let enemy_x, enemy_y;
+let enemy_exists = false;
+let exp = 0;
 
 function setup() {
     // create the canvas equal to the window size, but below the button at the top
@@ -29,6 +33,7 @@ function setup() {
   current_img = charmander;
   current_img_back = charmander_back;
   noCursor(); 
+  spawnEnemy();
 }
 
 // "evolve" function that increments the count and updates the current image
@@ -39,6 +44,13 @@ function evolve() {
 
 }
 
+function spawnEnemy() {
+    let enemy_pokemon = loadImage("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + Math.floor(Math.random() * 150 + 1) + ".png");
+    enemy_img = enemy_pokemon;
+    enemy_x = Math.random() * (windowWidth - 100);
+    enemy_y = Math.random() * (windowHeight - 150);
+    enemy_exists = true;
+}
 
 function draw() {
 
@@ -53,6 +65,12 @@ function draw() {
         }
     }
 
+    if (enemy_exists) {
+        image(enemy_img, enemy_x, enemy_y, 50, 50);
+        moveEnemy();
+        checkCollision();
+    }
+    drawExpBar();
 
     // if the mouse is pressed or the screen is touched
     if (mouseIsPressed || touches.length > 0) {
@@ -85,6 +103,53 @@ function draw() {
 
 
 
+}
+
+function moveEnemy() {
+    enemy_x += Math.random() * 4 - 2;
+    enemy_y += Math.random() * 4 - 2;
+    enemy_x = constrain(enemy_x, 0, windowWidth - 50);
+    enemy_y = constrain(enemy_y, 0, windowHeight - 100);
+}
+
+function checkCollision() {
+    if (fireball) {
+        // Calculate the actual size of the fireball
+        let fireballWidth = fire_ball_image.width * ball_size;
+        let fireballHeight = fire_ball_image.height * ball_size;
+
+        // Compute the center of the fireball
+        let fireballCenterX = fire_count + fireballWidth / 2;
+        let fireballCenterY = y_value + fireballHeight / 2;
+
+        // Enemy size (assumed fixed at 50x50)
+        let enemyCenterX = enemy_x + 25;
+        let enemyCenterY = enemy_y + 25;
+
+        // Calculate collision radius
+        let fireballRadius = Math.max(fireballWidth, fireballHeight) / 2; // Approximate the fireball as a circle
+        let enemyRadius = 5;
+
+        // Check if the distance between centers is less than the sum of radii
+        if (dist(fireballCenterX, fireballCenterY, enemyCenterX, enemyCenterY) < fireballRadius + enemyRadius) {
+            enemy_exists = false;
+            fireball = false;
+            exp++;
+            if (exp >= 3) {
+                evolve();
+                exp = 0;
+            }
+            spawnEnemy();
+        }
+    }
+}
+
+
+function drawExpBar() {
+    fill(0);
+    rect(10, 10, 100, 20);
+    fill(0, 255, 0);
+    rect(10, 10, exp * 33.33, 20);
 }
 
 function fireball_function() {
