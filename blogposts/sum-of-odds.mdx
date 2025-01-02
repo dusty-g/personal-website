@@ -1,0 +1,21 @@
+---
+title: "Sum of First n Odd Numbers Equals n Squared"
+date: "2025-01-01"
+---
+
+
+
+Happy New Year!
+
+2025, the square of 45, also equals the sum of the first 45 odd numbers (1 + 3 + 5 + ... + 89).
+
+I was surprised by this and wondered if it was true for all numbers, or if there was something unique about the number 45.
+
+<SumOfOddsVisualizer />
+
+It is obviously true when n = 1 (1² = 1 and the sum of the first odd number is also 1). To get from a 1x1 square to a 2x2 square requires adding 2 squares on the right side of the first square, and one on the bottom (1 + 3). To get to a 3x3 square, you have to add 3 squares on the right side, and 2 squares on the bottom (4 + 5).
+
+Getting to the next square always requires n squares on the right and n - 1 squares on the bottom. And n + (n - 1) is equal to the nth odd number (2n - 1)! So n² is equal to summing up all these added layers (the sum of odd numbers from 1 to the nth odd number, 2n - 1).
+
+You can use the interactive visualization above to help see this.
+

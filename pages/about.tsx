@@ -46,7 +46,7 @@ export default function About() {
             <p className={styles.dates}>Nov 2023 - Present</p>
             <ul>
                 <li>
-                    <p>Support Marketing Cloud Engagement, specifically Mobile products such as MobileConnect (SMS marketing), MobilePush (push notifications and SDK support), and WhatsApp</p>
+                    <p>Supports Marketing Cloud Engagement, specifically Mobile products such as MobileConnect (SMS marketing), MobilePush (push notifications and SDK support), and WhatsApp</p>
                 </li>
             </ul>
             <hr className={styles.boldLine}/>

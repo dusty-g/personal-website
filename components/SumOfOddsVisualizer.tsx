@@ -48,8 +48,10 @@ export default function SumOfOddsVisualizer() {
     <div style={{ padding: 20 }}>
       <h2>Sum of the First {n} Odd Numbers</h2>
       <p>
-        The sum of the first {n} odd numbers (1, 3, 5, ..., {2 * n - 1}) is{' '}
+        The sum of the first {n} odd numbers (1, 3, 5, ...) is{' '}
         <strong>{sumOfOdds(n)}</strong>. This is equal to <strong>n²</strong>.
+
+        
       </p>
 
       <div style={{ marginBottom: 10 }}>
@@ -61,6 +63,7 @@ export default function SumOfOddsVisualizer() {
           +
         </button>
       </div>
+      <p>nth odd number = {2 * n - 1}</p>
 
       {/* Visualization of the n x n grid */}
       <div
