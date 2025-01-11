@@ -8,6 +8,7 @@
     margin: 10px 0;
     padding: 10px;
     border-radius: 5px;
+    white-space: pre-wrap;
   }
     /* bold horizontal line */
   .boldLine {
