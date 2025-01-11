@@ -35,7 +35,7 @@ Take your time! Which option resonates most with you?`}]);
     const userMessage = { role: "user", content: inputValue };
     let updatedMessages = [...messages, userMessage];
     try {
-      const response = await fetch('/api/chatBot', {
+      const response = await fetch('/api/chatBotRadiant', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
