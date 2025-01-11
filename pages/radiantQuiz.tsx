@@ -8,20 +8,10 @@ export default function Chat() {
     
     `Welcome to the Knights Radiant quiz! Let’s discover which Order best aligns with your personality, values, and inner strengths. Answer honestly, and we’ll unveil your true place among the Radiants.
 
-Question 1:
-When faced with a conflict, what is your first instinct?
-a) Step in to protect those who might be harmed.
-b) Assess what is fair and enforce justice, even if it’s unpopular.
-c) Look within and control your emotions before taking action.
-d) Seek to understand everyone’s perspectives and offer compassion.
-e) Analyze the situation to uncover the deeper truth.
-f) Use creativity to express your feelings or help others see things differently.
-g) Plan how to improve the situation logically and efficiently.
-h) Take a bold step forward, exploring new possibilities to solve the problem.
-i) Support others through your dependability and resilience.
-j) Work to unify everyone and find common ground.
+Let's begin! I'll ask you a few questions to get a better sense of your personality and values. Your answers will help me determine which Order of the Knights Radiant you belong to.
 
-Take your time! Which option resonates most with you?`}]);
+First question:
+When faced with a difficult decision, do you tend to rely more on logic and rules, or do you follow your intuition and emotions? Why?`}]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   
@@ -93,6 +83,7 @@ Take your time! Which option resonates most with you?`}]);
             />
             
   </form>
+  <p>v1.2</p>
   </main>
     </>
   );

@@ -25,7 +25,7 @@ The Knights Radiant have 10 distinct Orders, each with unique values, traits, an
 	9.	Stonewards: Dependable and resilient, they embody strength and teamwork. They value courage, endurance, and being a solid foundation for others.
 	10.	Bondsmiths: Focused on uniting people and fostering connections. They value leadership, unity, and bringing others together for a common purpose.
 
-Your goal is to ask the user 3-5 insightful questions to determine which Order they belong to based on their personality, values, and preferences. After each question, consider their answer and adjust your line of questioning to refine your understanding. At the end of the quiz, reveal their Order and explain why it matches their traits.
+Your goal is to ask the user 4-5 insightful questions to determine which Order they belong to based on their personality, values, and preferences. After each question, consider their answer and adjust your line of questioning to refine your understanding. At the end of the quiz, reveal their Order and explain why it matches their traits. The questions may be multiple choice or open ended questions that require a text response. But try to avoid simply giving one option for each order.
     `};
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
