@@ -5,7 +5,7 @@ import matter from 'gray-matter';
 
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
-import remark2html from 'remark-html';
+import remarkHtml from 'remark-html';
 
 
 
@@ -73,7 +73,8 @@ export function getAllPostIds() {
     // Use remark to convert markdown into HTML string
     const processedContent = await unified()
       .use(remarkParse)
-      .use(remark2html)
+       // @ts-ignore: remark-html types not compatible with unified
+      .use(remarkHtml)
       .process(matterResult.content)
     const contentHtml = processedContent.toString()
   
