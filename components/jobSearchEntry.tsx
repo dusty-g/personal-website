@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { push, ref, update } from "firebase/database";
 import { useObjectVal } from "react-firebase-hooks/database";
 
-import { db } from 'src/pages/_app'
+import { rtdb } from 'src/utils/firebaseClient'
 import Head from "next/head";
 import Nav from "src/components/nav";
 import { useRouter } from "next/router";
@@ -54,7 +54,7 @@ export function useAuth() : Auth | null{
     }, [auth]);
    
     // get database reference if mode is "update"
-    const databaseRef = mode === "update" ? ref(db, `jobs/${jobSearchEntryId}`) : null;
+    const databaseRef = mode === "update" ? ref(rtdb, `jobs/${jobSearchEntryId}`) : null;
     // Use the useObjectVal hook to get the data, loading indicator, and error object
     const [data, loading, error] = useObjectVal<any>(databaseRef);
     
@@ -177,8 +177,8 @@ export function useAuth() : Auth | null{
             applicationStatus: applicationStatus,
             salary: salary
         };
-        // push new job to firebase database
-        push(ref(db, 'jobs'), newJob)
+          // push new job to firebase database
+          push(ref(rtdb, 'jobs'), newJob)
         .then(() => {
             // set isSubmitting to false to enable form
             setIsSubmitting(false);
@@ -221,8 +221,8 @@ export function useAuth() : Auth | null{
         applicationStatus: applicationStatus,
         salary: salary
     };
-    // update existing job in firebase database
-    update(ref(db, `jobs/${jobSearchEntryId}`), updatedJob)
+      // update existing job in firebase database
+      update(ref(rtdb, `jobs/${jobSearchEntryId}`), updatedJob)
     .then(() => {
         // set isSubmitting to false to enable form
         setIsSubmitting(false);
