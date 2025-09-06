@@ -8,6 +8,7 @@ import {
 } from "firebase/app-check";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import { getDatabase } from "firebase/database";
 
 
 const firebaseConfig = {
@@ -21,19 +22,22 @@ const firebaseConfig = {
 
 export const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+export const db = getFirestore(app);
+export const rtdb = getDatabase(app); // Realtime DB
 
 let appCheck: AppCheck | undefined;
 if (typeof window !== "undefined" && !appCheck) {
   // Enable debug only in dev if needed
   // @ts-ignore
-  self.FIREBASE_APPCHECK_DEBUG_TOKEN = process.env.NEXT_PUBLIC_FB_APPCHECK_DEBUG === "true";
+  self.FIREBASE_APPCHECK_DEBUG_TOKEN =
+    process.env.NEXT_PUBLIC_FB_APPCHECK_DEBUG === "true";
   appCheck = initializeAppCheck(app, {
-    provider: new ReCaptchaV3Provider(process.env.NEXT_PUBLIC_FB_RECAPTCHA_V3_SITE_KEY!),
+    provider: new ReCaptchaV3Provider(
+      process.env.NEXT_PUBLIC_FB_RECAPTCHA_V3_SITE_KEY!
+    ),
     isTokenAutoRefreshEnabled: true,
   });
 }
-
-export const db = getFirestore(app);
 
 export async function getAppCheckHeader() {
   if (typeof window === "undefined" || !appCheck) return {};
