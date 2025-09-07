@@ -1,6 +1,6 @@
 // pages/api/increment.ts
 import type { NextApiRequest, NextApiResponse } from "next";
-import { adb, FieldValue } from "@/utils/firebaseAdmin";
+import { adb, FieldValue } from "../../utils/firebaseAdmin";
 import crypto from "crypto";
 
 // Limits: human-ish ceiling
