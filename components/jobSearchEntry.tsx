@@ -5,11 +5,11 @@ import React, { useEffect, useState } from "react";
 import { push, ref, update } from "firebase/database";
 import { useObjectVal } from "react-firebase-hooks/database";
 
-import { rtdb } from 'src/utils/firebaseClient'
+import { getRtdb, getAuthC } from 'src/utils/firebaseClient'
 import Head from "next/head";
 import Nav from "src/components/nav";
 import { useRouter } from "next/router";
-import { getAuth, signInWithPopup, GoogleAuthProvider, Auth, User } from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider, Auth, User } from "firebase/auth";
 import router from "next/router";
 // import styles
 import styles from 'src/styles/NewJobSearchLog.module.css'
@@ -23,7 +23,7 @@ export function useAuth() : Auth | null{
     useEffect(() => {
       // initialize firebase auth only once
       if (!auth) {
-        setAuth(getAuth());
+        setAuth(getAuthC());
       }
     }, [auth]);
   
@@ -53,6 +53,7 @@ export function useAuth() : Auth | null{
         return unsubscribe;
     }, [auth]);
    
+    const rtdb = getRtdb();
     // get database reference if mode is "update"
     const databaseRef = mode === "update" ? ref(rtdb, `jobs/${jobSearchEntryId}`) : null;
     // Use the useObjectVal hook to get the data, loading indicator, and error object

@@ -1,4 +1,5 @@
-import { getAuth, signInWithPopup, GoogleAuthProvider, Auth, User } from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider, Auth, User } from "firebase/auth";
+import { getAuthC } from 'src/utils/firebaseClient';
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import Nav from "./nav";
@@ -12,7 +13,7 @@ export function useAuth() : Auth | null{
     useEffect(() => {
       // initialize firebase auth only once
       if (!auth) {
-        setAuth(getAuth());
+        setAuth(getAuthC());
       }
     }, [auth]);
   
