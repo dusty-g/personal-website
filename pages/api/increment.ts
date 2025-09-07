@@ -5,6 +5,7 @@ import crypto from "crypto";
 // Limits: human-ish ceiling;
 const MAX_PER_SEC = 8;
 const MAX_PER_MIN = 200;
+console.log("Admin projectId:", (await import("firebase-admin/app")).getApp().options.projectId);
 
 async function verifyAppCheck(req: NextApiRequest) {
   const token = (req.headers["x-firebase-appcheck"] as string) || "";

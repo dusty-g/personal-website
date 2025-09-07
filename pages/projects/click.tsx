@@ -13,7 +13,7 @@ export default function ClickPage() {
     const unsub = onSnapshot(
       ref,
       snap => {
-        console.log(snap.data());
+        // console.log(snap.data());
         setCount((snap.data()?.count as number) ?? 0);
       },
       err => console.error("snapshot err", err)

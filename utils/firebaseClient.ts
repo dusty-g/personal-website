@@ -22,7 +22,7 @@ export async function getAppCheckHeader() {
   try {
     const { token } = await getAppCheckToken(ac, false);
     if (token) {
-      console.log("[AppCheck] token retrieved:", token.substring(0, 12) + "…");
+    //   console.log("[AppCheck] token retrieved:", token.substring(0, 12) + "…");
       return { "X-Firebase-AppCheck": token };
     } else {
       console.warn("[AppCheck] no token returned");
@@ -36,15 +36,15 @@ export async function getAppCheckHeader() {
 
 
 // --- one-time probe on module load (client only) ---
-if (typeof window !== "undefined") {
-  const ac = getAppCheckInstance();
-  if (ac) {
-    getAppCheckToken(ac, false)
-      .then(({ token }) => {
-        console.log("[AppCheck probe] initial token?", !!token);
-      })
-      .catch((e) => {
-        console.error("[AppCheck probe] failed", e);
-      });
-  }
-}
+// if (typeof window !== "undefined") {
+//   const ac = getAppCheckInstance();
+//   if (ac) {
+//     getAppCheckToken(ac, false)
+//       .then(({ token }) => {
+//         console.log("[AppCheck probe] initial token?", !!token);
+//       })
+//       .catch((e) => {
+//         console.error("[AppCheck probe] failed", e);
+//       });
+//   }
+// }
