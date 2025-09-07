@@ -1,0 +1,71 @@
+## Adding a Secure Click Counter with Firebase + Next.js
+
+I built a global click counter [here](https://dustygalindo.net/projects/click "Check it out"). One button, a shared number in Firestore, real-time updates across browsers. I figured it’d be a quick 30-minute project. A few hours (and hundreds of back-and-forths with GPT-5) later, it finally worked.
+
+---
+
+### The Goal
+- Show a counter that increments when anyone clicks.
+- Update instantly everywhere.
+- Keep bots from hammering the DB and spiking the bill.
+
+#### Why not the naive approach?
+The lazy way would be: client calls `increment()` directly on Firestore, rules are something like `allow write: if request.auth != null;` (or worse, wide open), and there’s no App Check or throttling. That works for a demo, but any script can smash it with fake clicks, inflate counts, or run up usage. Nobody’s sitting there manually clicking 20k times to break your free tier, but bots don’t need to sleep. A few extra guardrails now saves hassle later.
+
+---
+
+### Architecture
+- **Frontend**: Next.js, Firestore listener in the client.
+- **Database**: Firestore doc `counters/global`.
+- **Security**: [Firebase App Check](https://firebase.google.com/docs/app-check) + [reCAPTCHA v3](https://developers.google.com/recaptcha/docs/v3). Clients can only read; writes go through API.
+- **Serverless API**: Next.js `/api/increment` route with Firebase Admin SDK.
+- **Rate limiting**: Per‑IP token bucket to stop spammers.
+
+Firestore rules look like this:
+```js
+allow read: if true;
+allow write: if false;
+```
+All writes are server‑only.
+
+---
+
+### The Gotchas Encountered
+
+**1. Cross‑project credentials**  
+My Firebase project (Firestore + App Check) was separate from the App Engine project hosting the site. That’s apparently common practice. Some teams separate resources for billing or access control. Problem: App Check tokens weren’t verifying because of this. Fix: grant the **App Engine default service account** from the web project the roles `datastore.user` and `firebaseappcheck.verifier` in the Firebase project. No Service Account JSON. Took me lots of troubleshooting (and tons of added logs) to figure this out since I had assumed they were in the same Project.
+
+**2. App Check initialization order**  
+Firestore was throwing permission errors when App Check enforcement was on. Turns out I was starting Firestore before App Check. Fix: initialize App Check first in the browser.
+
+**3. Debug tokens**  
+reCAPTCHA v3 in dev is annoying. Firebase’s debug tokens help: set `self.FIREBASE_APPCHECK_DEBUG_TOKEN = true`, grab the logged token, register it in the Firebase console, then reuse it via `.env.local`.
+
+**4. Stray credentials**  
+After I got everything working locally I tried to deploy to "production" and my server blew up. Adding a bunch of logs I discovered it was looking for a JSON key at `/Users/dustygalindo/Downloads/...json`. I’d left `GOOGLE_APPLICATION_CREDENTIALS` in `.env.local`. Next.js shipped it into deploy, but App Engine couldn’t find that path. Removing it let App Engine fall back to its default service account (with the IAM roles above). Lesson: don’t carry local secrets into prod.
+
+---
+
+### How It Works (Final Flow)
+1. Client boots Firebase + App Check with reCAPTCHA v3.
+2. Client listens to `counters/global` via `onSnapshot`.
+3. User clicks → client fetches `/api/increment`.
+4. API verifies App Check token, rate limits, increments Firestore.
+5. Firestore pushes the update out in real time.
+
+---
+
+### Lessons Learned
+- Cross‑project setups are fine—just wire IAM correctly.
+- Initialize App Check before Firestore.
+- Debug tokens save sanity in dev.
+- Keep Firestore rules minimal when paired with App Check + API writes.
+- Double‑check env vars; stray creds cause bizarre errors.
+
+---
+
+### App Check isn’t just for clickers
+App Check with reCAPTCHA isn’t only for silly counters. It’s useful anywhere you accept input—forms, logins, password resets. Bots are getting better, with LLM agents poking at weak spots. App Check gives you a verifiable token to filter junk before your backend even runs. That cuts waste, makes rate limiting effective, and protects your actual users.
+
+It’s extra wiring for a toy project, but the same setup scales to real forms and auth flows without re‑architecting later.
+

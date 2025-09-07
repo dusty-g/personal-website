@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getDb, getAppCheckHeader } from "src/utils/firebaseClient";
 import { doc, onSnapshot } from "firebase/firestore";
+import Link from "next/link";
 
 
 export default function ClickPage() {
@@ -43,7 +44,7 @@ export default function ClickPage() {
         {busy ? "…" : "Click"}
       </button>
       {err && <div style={{color:"crimson"}}>{err}</div>}
-      <p style={{opacity:.7}}>Realtime from Firestore. Writes go through a rate-limited API.</p>
+      <p>More info here: <Link href="/blog/click-counter">Building a secure Click Counter</Link></p>
     </div>
   );
 }
