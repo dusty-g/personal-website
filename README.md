@@ -20,20 +20,8 @@ The project is organized into the following directories:
 This project is built using TypeScript, a typed superset of JavaScript that helps catch errors and provides better code completion and documentation. However, regular JavaScript can also be used in a Next.js project if preferred.
 
 ## Tools Used
-During the development of this project, I utilized ChatGPT and GitHub Copilot to accelerate my learning and development process. ChatGPT is a large language model trained by OpenAI that can answer natural language questions and provide explanations on a variety of topics. GitHub Copilot is an AI-powered code completion tool that provides suggestions for code snippets based on the context of your code.
+During the development of this project, I utilized ChatGPT to accelerate my learning and development process. ChatGPT is a large language model trained by OpenAI that can answer natural language questions and provide explanations on a variety of topics. 
 
-Using ChatGPT, I was able to quickly learn about the concepts and best practices of Next.js and TypeScript, and get answers to any questions I had along the way. ChatGPT provided detailed explanations and examples that helped me gain a deeper understanding of these technologies.
-
-In fact, this entire README (except for lines 1 and 27) was written by ChatGPT.
-
-## Getting Started
-
-To get started with the project, follow these steps:
-
-1. Clone the repository.
-2. Run `npm install` to install all the project dependencies.
-3. Run `npm run dev` to start the development server.
-4. Open `http://localhost:3000` to view the website in your browser.
 
 ## Deployment
 
@@ -42,3 +30,21 @@ To deploy the project, follow these steps:
 1. Ensure that all the necessary environment variables are set up for your deployment environment.
 2. Run `npm run build` to build the project.
 3. Run `npm start` to start the production server.
+
+
+## Button Clicker Overview
+
+pages/projects/click.tsx – Client UI
+Sets up a Firestore listener on counters/global that updates local state whenever the document changes and defines an increment function that calls the API with an AppCheck token when the button is clicked
+
+utils/firebaseClient.ts – Client-side Firebase helpers
+Provides getDb for Firestore access and getAppCheckHeader, which retrieves a client AppCheck token and formats the X-Firebase-AppCheck header for API calls
+
+utils/appInit.ts – Shared app & AppCheck initialization
+Initializes the Firebase app using NEXT_PUBLIC_FIREBASE_* environment variables and sets up AppCheck with ReCaptcha V3, honoring an optional debug token
+
+pages/api/increment.ts – Serverless counter increment endpoint
+Verifies the X-Firebase-AppCheck header, rate-limits requests per IP, and increments the Firestore counter document; errors are returned for invalid tokens, rate limits, or other failures
+
+utils/firebaseAdmin.ts – Firebase Admin bootstrap
+Creates a server-side Firestore instance using default credentials, allowing increment.ts to update the counter and apply rate-limiting metadata

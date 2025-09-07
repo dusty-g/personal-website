@@ -20,7 +20,10 @@ export function ensureAppAndAppCheck(): FirebaseApp {
   if (typeof window !== "undefined") {
     if (process.env.NEXT_PUBLIC_FB_APPCHECK_DEBUG) {
       // @ts-ignore
-      self.FIREBASE_APPCHECK_DEBUG_TOKEN = process.env.NEXT_PUBLIC_FB_APPCHECK_DEBUG;
+      self.FIREBASE_APPCHECK_DEBUG_TOKEN =
+    process.env.NEXT_PUBLIC_FB_APPCHECK_DEBUG === "true"
+      ? true
+      : process.env.NEXT_PUBLIC_FB_APPCHECK_DEBUG || undefined;
     }
     if (!appCheck) {
       appCheck = initializeAppCheck(app, {

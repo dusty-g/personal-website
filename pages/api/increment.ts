@@ -2,16 +2,23 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { adb, FieldValue } from "../../utils/firebaseAdmin";
 import crypto from "crypto";
 
-// Limits: human-ish ceiling; adjust as you like
+// Limits: human-ish ceiling;
 const MAX_PER_SEC = 8;
 const MAX_PER_MIN = 200;
 
 async function verifyAppCheck(req: NextApiRequest) {
   const token = (req.headers["x-firebase-appcheck"] as string) || "";
   if (!token) throw new Error("NO_APPCHECK");
-  const { getAppCheck } = await import("firebase-admin/app-check");
-  const ac = getAppCheck();
-  await ac.verifyToken(token);
+  try {
+    const { getAppCheck } = await import("firebase-admin/app-check");
+    const ac = getAppCheck();
+    const decoded = await ac.verifyToken(token);
+    // console.log("AppCheck OK", decoded.appId, decoded.sub);
+    return decoded;
+  } catch (e: any) {
+    // console.error("AppCheck verify failed:", e?.code, e?.message, e);
+    throw new Error("BAD_APPCHECK");
+  }
 }
 
 function clientIp(req: NextApiRequest) {
