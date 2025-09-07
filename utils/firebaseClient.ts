@@ -1,16 +1,52 @@
-import { ensureAppAndAppCheck , getAppCheckInstance} from "./appInit";
+import { ensureAppAndAppCheck, getAppCheckInstance } from "./appInit";
 import { getFirestore, type Firestore } from "firebase/firestore";
 import { getAuth, type Auth } from "firebase/auth";
 import { getDatabase, type Database } from "firebase/database";
 import { getToken as getAppCheckToken, type AppCheck } from "firebase/app-check";
 
+function traceAccess(service: string) {
+  if (typeof window !== "undefined") {
+    console.trace(`[firebase] ${service} requested`);
+  }
+}
+
+function logOptions(service: string, app: { options: { projectId?: string; appId?: string } }) {
+  console.log(`[firebase] ${service} app`, {
+    projectId: app.options.projectId,
+    appId: app.options.appId,
+  });
+}
+
 let _db: Firestore | undefined;
 let _auth: Auth | undefined;
 let _rtdb: Database | undefined;
 
-export function getDb()   { return _db   ?? (_db   = getFirestore(ensureAppAndAppCheck())); }
-export function getAuthC(){ return _auth ?? (_auth = getAuth(ensureAppAndAppCheck())); }
-export function getRtdb() { return _rtdb ?? (_rtdb = getDatabase(ensureAppAndAppCheck())); }
+export function getDb() {
+  if (!_db) {
+    traceAccess("getDb");
+    _db = getFirestore(ensureAppAndAppCheck());
+    logOptions("getDb", _db.app);
+  }
+  return _db;
+}
+
+export function getAuthC() {
+  if (!_auth) {
+    traceAccess("getAuthC");
+    _auth = getAuth(ensureAppAndAppCheck());
+    logOptions("getAuthC", _auth.app);
+  }
+  return _auth;
+}
+
+export function getRtdb() {
+  if (!_rtdb) {
+    traceAccess("getRtdb");
+    _rtdb = getDatabase(ensureAppAndAppCheck());
+    logOptions("getRtdb", _rtdb.app);
+  }
+  return _rtdb;
+}
 
 export async function getAppCheckHeader() {
   if (typeof window === "undefined") return {};
