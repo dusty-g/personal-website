@@ -1,50 +1,50 @@
-// utils/firebaseClient.ts
-import { initializeApp, getApps } from "firebase/app";
-import {
-  initializeAppCheck,
-  ReCaptchaV3Provider,
-  getToken as getAppCheckToken,
-  AppCheck,
-} from "firebase/app-check";
-import { getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
-import { getDatabase } from "firebase/database";
+import { ensureAppAndAppCheck , getAppCheckInstance} from "./appInit";
+import { getFirestore, type Firestore } from "firebase/firestore";
+import { getAuth, type Auth } from "firebase/auth";
+import { getDatabase, type Database } from "firebase/database";
+import { getToken as getAppCheckToken, type AppCheck } from "firebase/app-check";
 
+let _db: Firestore | undefined;
+let _auth: Auth | undefined;
+let _rtdb: Database | undefined;
 
-const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-};
-
-export const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const rtdb = getDatabase(app); // Realtime DB
-
-let appCheck: AppCheck | undefined;
-if (typeof window !== "undefined" && !appCheck) {
-  // Enable debug only in dev if needed
-  // @ts-ignore
-  self.FIREBASE_APPCHECK_DEBUG_TOKEN =
-    process.env.NEXT_PUBLIC_FB_APPCHECK_DEBUG === "true";
-  appCheck = initializeAppCheck(app, {
-    provider: new ReCaptchaV3Provider(
-      process.env.NEXT_PUBLIC_FB_RECAPTCHA_V3_SITE_KEY!
-    ),
-    isTokenAutoRefreshEnabled: true,
-  });
-}
+export function getDb()   { return _db   ?? (_db   = getFirestore(ensureAppAndAppCheck())); }
+export function getAuthC(){ return _auth ?? (_auth = getAuth(ensureAppAndAppCheck())); }
+export function getRtdb() { return _rtdb ?? (_rtdb = getDatabase(ensureAppAndAppCheck())); }
 
 export async function getAppCheckHeader() {
-  if (typeof window === "undefined" || !appCheck) return {};
-  try {
-    const { token } = await getAppCheckToken(appCheck, /* forceRefresh */ false);
-    return token ? { "X-Firebase-AppCheck": token } : {};
-  } catch {
+  if (typeof window === "undefined") return {};
+  const ac: AppCheck | undefined = getAppCheckInstance();
+  if (!ac) {
+    console.warn("[AppCheck] no AppCheck instance available");
     return {};
+  }
+  try {
+    const { token } = await getAppCheckToken(ac, false);
+    if (token) {
+      console.log("[AppCheck] token retrieved:", token.substring(0, 12) + "…");
+      return { "X-Firebase-AppCheck": token };
+    } else {
+      console.warn("[AppCheck] no token returned");
+      return {};
+    }
+  } catch (err) {
+    console.error("[AppCheck] getToken failed", err);
+    return {};
+  }
+}
+
+
+// --- one-time probe on module load (client only) ---
+if (typeof window !== "undefined") {
+  const ac = getAppCheckInstance();
+  if (ac) {
+    getAppCheckToken(ac, false)
+      .then(({ token }) => {
+        console.log("[AppCheck probe] initial token?", !!token);
+      })
+      .catch((e) => {
+        console.error("[AppCheck probe] failed", e);
+      });
   }
 }

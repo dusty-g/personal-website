@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { db, getAppCheckHeader } from "../../utils/firebaseClient";
+import { getDb } from "../../utils/firebaseClient";
+import { getAppCheckHeader } from "../../utils/firebaseClient";
 import { doc, onSnapshot } from "firebase/firestore";
+
 
 export default function ClickPage() {
   const [count, setCount] = useState<number | null>(null);
@@ -8,10 +10,10 @@ export default function ClickPage() {
   const [err, setErr] = useState<string | null>(null);
 
   useEffect(() => {
-    const ref = doc(db, "counters", "global");
-    const off = onSnapshot(ref, (snap) => setCount(snap.data()?.count ?? 0));
-    return () => off();
-  }, []);
+  const ref = doc(getDb(), "counters", "global");
+  const unsub = onSnapshot(ref, snap => {/* ... */}, err => console.error("snapshot err", err));
+  return () => unsub();
+}, []);
 
   const increment = async () => {
     setBusy(true);

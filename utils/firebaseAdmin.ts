@@ -1,18 +1,13 @@
-import * as admin from "firebase-admin";
+import { getApps, initializeApp, applicationDefault } from "firebase-admin/app";
+import { getFirestore, FieldValue } from "firebase-admin/firestore";
 
-// Ensure this file is only executed in a server-side context.
 if (typeof window !== "undefined") {
   throw new Error("firebaseAdmin must be used only on the server");
 }
 
-const credential =
-  process.env.GOOGLE_APPLICATION_CREDENTIALS
-    ? admin.credential.cert(JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS))
-    : admin.credential.applicationDefault();
+const app = getApps().length
+  ? getApps()[0]
+  : initializeApp({ credential: applicationDefault() });
 
-if (!admin.apps.length) {
-  admin.initializeApp({ credential });
-}
-
-export const adb = admin.firestore();
-export const FieldValue = admin.firestore.FieldValue;
+export const adb = getFirestore(app);
+export { FieldValue };
