@@ -5,7 +5,7 @@ import styles from 'src/styles/JobSearchLog.module.css'
 import { useEffect, useState } from 'react';
 // import firebase
 import { ref, onValue } from "firebase/database";
-import { rtdb } from 'src/utils/firebaseClient'
+import { getRtdb } from 'src/utils/firebaseClient'
 import Link from 'next/link';
 import React from 'react';
 
@@ -13,6 +13,7 @@ export default function JobSearchLog() {
     // get data from firebase. need to set types. fixed in next line
     const [jobData, setJobData] = useState<any[]>([]);
     useEffect(() => {
+        const rtdb = getRtdb();
         // get data from firebase sorted by dateApplied
         const dbRef = ref(rtdb, 'jobs');
         onValue(dbRef, (snapshot) => {
