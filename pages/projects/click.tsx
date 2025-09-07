@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { getDb } from "../../utils/firebaseClient";
-import { getAppCheckHeader } from "../../utils/firebaseClient";
+import { getDb, getAppCheckHeader } from "src/utils/firebaseClient";
 import { doc, onSnapshot } from "firebase/firestore";
 
 
