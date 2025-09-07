@@ -1,25 +1,28 @@
+// pages/api/increment.ts
 import type { NextApiRequest, NextApiResponse } from "next";
-import { adb, FieldValue } from "../../utils/firebaseAdmin";
+import { adb, FieldValue } from "@/utils/firebaseAdmin";
 import crypto from "crypto";
 
-// Limits: human-ish ceiling;
+// Limits: human-ish ceiling
 const MAX_PER_SEC = 8;
 const MAX_PER_MIN = 200;
-console.log("Admin projectId:", (await import("firebase-admin/app")).getApp().options.projectId);
+
+async function logAdminProjectOnce() {
+  try {
+    // @ts-ignore
+    const pid = (await import("firebase-admin/app")).getApp().options.projectId;
+    console.log("[increment] Admin projectId:", pid);
+  } catch (e) {
+    console.error("[increment] Failed to read admin projectId:", e);
+  }
+}
 
 async function verifyAppCheck(req: NextApiRequest) {
   const token = (req.headers["x-firebase-appcheck"] as string) || "";
   if (!token) throw new Error("NO_APPCHECK");
-  try {
-    const { getAppCheck } = await import("firebase-admin/app-check");
-    const ac = getAppCheck();
-    const decoded = await ac.verifyToken(token);
-    // console.log("AppCheck OK", decoded.appId, decoded.sub);
-    return decoded;
-  } catch (e: any) {
-    // console.error("AppCheck verify failed:", e?.code, e?.message, e);
-    throw new Error("BAD_APPCHECK");
-  }
+  const { getAppCheck } = await import("firebase-admin/app-check");
+  const ac = getAppCheck();
+  return ac.verifyToken(token);
 }
 
 function clientIp(req: NextApiRequest) {
@@ -53,17 +56,35 @@ async function rateLimit(ip: string) {
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") return res.status(405).end();
+
+  // Helpful request context
+  await logAdminProjectOnce();
+  const ip = clientIp(req);
+  const appCheckHeader = (req.headers["x-firebase-appcheck"] as string) || "";
+  console.log("[increment] IP:", ip, "AppCheck hdr len:", appCheckHeader.length);
+
+  // 1) Verify App Check
   try {
     await verifyAppCheck(req);
-  } catch {
+    console.log("[increment] AppCheck verified");
+  } catch (e: any) {
+    console.error("[increment] AppCheck verify failed:", e?.code || e?.message, e);
     return res.status(401).json({ error: "invalid app check" });
   }
 
+  // 2) Rate limit + write
   try {
-    await rateLimit(clientIp(req));
-    await adb.doc("counters/global").update({ count: FieldValue.increment(1) });
+    console.log("[increment] rateLimit start");
+    await rateLimit(ip);
+    console.log("[increment] rateLimit ok");
+
+    // Use set(..., {merge:true}) so missing doc can't cause a 500
+    await adb.doc("counters/global").set({ count: FieldValue.increment(1) }, { merge: true });
+    console.log("[increment] write ok");
+
     return res.status(204).end();
   } catch (e: any) {
+    console.error("[increment] Increment failed:", e?.code || e?.message, e);
     if (e?.message === "RATE") return res.status(429).json({ error: "too many" });
     return res.status(500).json({ error: "server error" });
   }
