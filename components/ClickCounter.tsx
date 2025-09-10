@@ -37,7 +37,7 @@ export default function ClickCounter() {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
+    <div >
       <div style={{ fontSize: 48, fontFamily: "system-ui" }}>{count ?? "…"}</div>
       <button onClick={increment} disabled={busy} style={{ padding: "10px 16px", fontSize: 18 }}>
         {busy ? "…" : "Click"}
