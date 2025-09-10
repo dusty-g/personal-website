@@ -56,13 +56,16 @@ export default function ExampleButtonHexConfetti() {
     const resize = () => {
       const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1))
       const rect = canvas.getBoundingClientRect()
-      canvas.width = Math.floor(rect.width * dpr)
-      canvas.height = Math.floor(rect.height * dpr)
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0) // scale drawing to CSS pixels
+      const newWidth = Math.floor(rect.width * dpr)
+      const newHeight = Math.floor(rect.height * dpr)
+      if (canvas.width !== newWidth || canvas.height !== newHeight) {
+        canvas.width = newWidth
+        canvas.height = newHeight
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0) // scale drawing to CSS pixels
+      }
     }
     resize()
-    const ro = new ResizeObserver(resize)
-    ro.observe(canvas)
+    window.addEventListener('resize', resize)
 
     // World params
     let last = performance.now()
@@ -255,7 +258,7 @@ export default function ExampleButtonHexConfetti() {
 
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current)
-      ro.disconnect()
+      window.removeEventListener('resize', resize)
     }
   }, [active])
 
