@@ -6,8 +6,15 @@ import { MDXRemote } from 'next-mdx-remote';
 import remarkGfm from 'remark-gfm';
 import { getAllPosts, getPostBySlug } from '../../utils/mdx';
 import SumOfOddsVisualizer from '../../components/SumOfOddsVisualizer';
-import Nav from '../../components/nav';
 
+import Nav from '../../components/nav';
+import dynamic from 'next/dynamic';
+
+// import ExampleButtonHexConfetti from '../../components/ExampleButtonHexConfetti';
+const ExampleButtonHexConfetti = dynamic(
+  () => import('../../components/ExampleButtonHexConfetti'),
+  { ssr: false }
+);
 /**
  * If you have custom components you want to embed in MDX
  * usage, define them here and pass as `components` to <MDXRemote />
@@ -16,6 +23,7 @@ const MDXComponents = {
   // Example:
   // CustomButton: (props) => <button style={{ background: 'tomato' }} {...props} />,
   SumOfOddsVisualizer,
+  ExampleButtonHexConfetti,
 };
 
 export default function BlogPost({ source, meta }) {
