@@ -32,7 +32,7 @@ export default function ExampleButtonHexConfetti() {
       ;(function frame() {
         // multiple bursts for ~1.2s
         confetti({
-          particleCount: 60,
+          particleCount: 6,
           startVelocity: 55,
           spread: 70,
           origin: { x: Math.random(), y: Math.random() * 0.4 + 0.1 },
