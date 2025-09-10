@@ -6,6 +6,7 @@ import { MDXRemote } from 'next-mdx-remote';
 import remarkGfm from 'remark-gfm';
 import { getAllPosts, getPostBySlug } from '../../utils/mdx';
 import SumOfOddsVisualizer from '../../components/SumOfOddsVisualizer';
+import ClickCounter from '../../components/ClickCounter';
 
 import Nav from '../../components/nav';
 import dynamic from 'next/dynamic';
@@ -24,6 +25,7 @@ const MDXComponents = {
   // CustomButton: (props) => <button style={{ background: 'tomato' }} {...props} />,
   SumOfOddsVisualizer,
   ExampleButtonHexConfetti,
+  ClickCounter,
 };
 
 export default function BlogPost({ source, meta }) {
