@@ -3,8 +3,6 @@ import styles from '../styles/Nav.module.css'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-
-
 export default function Nav() {
     const router = useRouter()
     return (
