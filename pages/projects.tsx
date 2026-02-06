@@ -35,6 +35,7 @@ export default function Projects() {
                         <li><Link href="projects/slider">Gamepad Audio Control</Link></li>
                         <li><Link href="projects/cellularAutomata/">Cellular Automata</Link></li>
                         <li><Link href="projects/fizzbuzz">FizzBuzz</Link></li>
+                        <li><Link href="projects/knitting-visualizer">Knitting Visualizer</Link><ul><li>Interactive knit/purl stitch chart editor with RS/WS fabric preview.</li></ul></li>
                         <li><Link href="/pokemon.html">Experimenting with P5.js</Link></li>
                     </ul>
                 </li>
