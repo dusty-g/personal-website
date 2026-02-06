@@ -91,52 +91,30 @@ button.cell {
   font-size: 0.9rem;
 }
 
-.fabricCell {
-  position: relative;
-  background: #f2d4b6;
-  border-color: rgba(90, 62, 35, 0.25);
-  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.45);
+.fabricWrap {
+  background: #d7b089;
+  border-radius: 8px;
+  padding: 0.4rem;
+  overflow-x: auto;
 }
 
-.stitchMark {
-  position: relative;
+.fabricSvg {
   display: block;
-  width: 18px;
-  height: 18px;
+  min-width: 420px;
+  width: 100%;
+  height: auto;
 }
 
-.knitTexture .stitchMark::before,
-.knitTexture .stitchMark::after {
-  content: "";
-  position: absolute;
-  width: 3px;
-  height: 15px;
-  top: 1px;
-  background: #805b3f;
-  border-radius: 999px;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.14);
+.fabricLabel {
+  font-size: 10px;
+  fill: #4b3322;
+  font-weight: 700;
 }
 
-.knitTexture .stitchMark::before {
-  left: 5px;
-  transform: rotate(26deg);
-}
-
-.knitTexture .stitchMark::after {
-  right: 5px;
-  transform: rotate(-26deg);
-}
-
-.purlTexture .stitchMark::before {
-  content: "";
-  position: absolute;
-  left: 3px;
-  right: 3px;
-  top: 5px;
-  height: 9px;
-  background: radial-gradient(circle at 50% 35%, #ffe8d2 0%, #d7a882 65%, #bf8862 100%);
-  border-radius: 999px;
-  box-shadow: 0 1px 0 rgba(92, 60, 34, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+.fabricSymbol {
+  font-size: 14px;
+  fill: #643f2a;
+  font-weight: 700;
 }
 
 @media (min-width: 960px) {
