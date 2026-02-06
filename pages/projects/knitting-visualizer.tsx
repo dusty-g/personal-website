@@ -143,6 +143,7 @@ export default function KnittingVisualizer() {
 
           <div>
             <h2>Fabric view ({viewSide})</h2>
+            <p className={styles.fabricHint}>V-shape = knit stitch, bump = purl stitch.</p>
             <div
               className={styles.grid}
               style={{ gridTemplateColumns: `40px repeat(${cols}, minmax(24px, 1fr))` }}
@@ -155,10 +156,11 @@ export default function KnittingVisualizer() {
                     {row.map((stitch, c) => (
                       <div
                         key={`f-${r}-${c}`}
-                        className={`${styles.cell} ${stitch === "K" ? styles.knit : styles.purl}`}
+                        className={`${styles.cell} ${styles.fabricCell} ${stitch === "K" ? styles.knitTexture : styles.purlTexture}`}
                         title={`Visible on ${viewSide}: ${stitch}`}
+                        aria-label={`Visible stitch row ${rowNumber} stitch ${c + 1}: ${stitch}`}
                       >
-                        {stitch === "K" ? "V" : "•"}
+                        <span className={styles.stitchMark} aria-hidden="true" />
                       </div>
                     ))}
                   </Fragment>
