@@ -1,32 +1,12 @@
 // pages/blog/[slug].js
-import { useMemo } from 'react';
 import Head from 'next/head';
 import { serialize } from 'next-mdx-remote/serialize';
 import { MDXRemote } from 'next-mdx-remote';
 import remarkGfm from 'remark-gfm';
 import { getAllPosts, getPostBySlug } from '../../utils/mdx';
-import SumOfOddsVisualizer from '../../components/SumOfOddsVisualizer';
-import ClickCounter from '../../components/ClickCounter';
-
+import { fetchPostBySlug, fetchAllPostsMeta } from '../../utils/github-mdx';
+import MDXComponents from '../../utils/mdx-components';
 import Nav from '../../components/nav';
-import dynamic from 'next/dynamic';
-
-// import ExampleButtonHexConfetti from '../../components/ExampleButtonHexConfetti';
-const ExampleButtonHexConfetti = dynamic(
-  () => import('../../components/ExampleButtonHexConfetti'),
-  { ssr: false }
-);
-/**
- * If you have custom components you want to embed in MDX
- * usage, define them here and pass as `components` to <MDXRemote />
- */
-const MDXComponents = {
-  // Example:
-  // CustomButton: (props) => <button style={{ background: 'tomato' }} {...props} />,
-  SumOfOddsVisualizer,
-  ExampleButtonHexConfetti,
-  ClickCounter,
-};
 
 export default function BlogPost({ source, meta }) {
    
@@ -56,33 +36,50 @@ export default function BlogPost({ source, meta }) {
 }
 
 export async function getStaticPaths() {
-  const posts = getAllPosts();
-  // Map post slugs to the `[slug]` param
-  const paths = posts.map((post) => ({ params: { slug: post.slug } }));
+  // In production, pre-render known posts from GitHub; new posts use fallback
+  // In development, use local filesystem for fast iteration
+  const useRemote = process.env.USE_REMOTE_MDX === 'true';
+
+  let slugs;
+  if (useRemote) {
+    const posts = await fetchAllPostsMeta();
+    slugs = posts.map((p) => p.slug);
+  } else {
+    const posts = getAllPosts();
+    slugs = posts.map((p) => p.slug);
+  }
 
   return {
-    paths,
-    fallback: false, // or 'blocking' if you prefer
+    paths: slugs.map((slug) => ({ params: { slug } })),
+    fallback: 'blocking',
   };
 }
 
 export async function getStaticProps({ params }) {
   const { slug } = params;
-  const { content, meta } = getPostBySlug(slug);
+  const useRemote = process.env.USE_REMOTE_MDX === 'true';
 
-  // Convert MDX content to serialized form
+  let content, meta;
+  if (useRemote) {
+    const post = await fetchPostBySlug(slug);
+    if (!post) return { notFound: true };
+    content = post.content;
+    meta = post.meta;
+  } else {
+    const post = getPostBySlug(slug);
+    content = post.content;
+    meta = post.meta;
+  }
+
   const mdxSource = await serialize(content, {
     mdxOptions: {
       remarkPlugins: [remarkGfm],
-      // Add more remark/rehype plugins here if needed
     },
     scope: meta,
   });
 
   return {
-    props: {
-      source: mdxSource,
-      meta,
-    },
+    props: { source: mdxSource, meta },
+    revalidate: 300,
   };
 }

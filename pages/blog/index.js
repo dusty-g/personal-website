@@ -2,6 +2,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import { getAllPosts } from '../../utils/mdx';
+import { fetchAllPostsMeta } from '../../utils/github-mdx';
 import Nav from '../../components/nav';
 
 export default function BlogIndex({ posts }) {
@@ -36,7 +37,17 @@ export default function BlogIndex({ posts }) {
 }
 
 export async function getStaticProps() {
-  const posts = getAllPosts();
-  console.log("posts: " + JSON.stringify(posts)); // Use JSON.stringify
-  return { props: { posts } };
+  const useRemote = process.env.USE_REMOTE_MDX === 'true';
+
+  let posts;
+  if (useRemote) {
+    posts = await fetchAllPostsMeta();
+  } else {
+    posts = getAllPosts().map(({ slug, title, date }) => ({ slug, title, date }));
+  }
+
+  return {
+    props: { posts },
+    revalidate: 300,
+  };
 }
