@@ -48,6 +48,6 @@ export async function getStaticProps() {
 
   return {
     props: { posts },
-    revalidate: 300,
+    revalidate: 604800,
   };
 }
