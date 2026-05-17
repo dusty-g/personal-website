@@ -1,6 +1,6 @@
 // pages/api/increment.ts
 import type { NextApiRequest, NextApiResponse } from "next";
-import { adb, FieldValue } from "../../utils/firebaseAdmin";
+import { adb, FieldValue, verifyAppCheckToken } from "../../utils/firebaseAdmin";
 import crypto from "crypto";
 
 // Limits: human-ish ceiling
@@ -8,21 +8,13 @@ const MAX_PER_SEC = 8;
 const MAX_PER_MIN = 200;
 
 async function logAdminProjectOnce() {
-  try {
-    // @ts-ignore
-    const pid = (await import("firebase-admin/app")).getApp().options.projectId;
-    console.log("[increment] Admin projectId:", pid);
-  } catch (e) {
-    console.error("[increment] Failed to read admin projectId:", e);
-  }
+  console.log("[increment] Firebase projectId:", process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID);
 }
 
 async function verifyAppCheck(req: NextApiRequest) {
   const token = (req.headers["x-firebase-appcheck"] as string) || "";
   if (!token) throw new Error("NO_APPCHECK");
-  const { getAppCheck } = await import("firebase-admin/app-check");
-  const ac = getAppCheck();
-  return ac.verifyToken(token);
+  return verifyAppCheckToken(token);
 }
 
 function clientIp(req: NextApiRequest) {
