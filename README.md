@@ -48,3 +48,9 @@ Verifies the X-Firebase-AppCheck header, rate-limits requests per IP, and increm
 
 utils/firebaseAdmin.ts – Firebase Admin bootstrap
 Creates a server-side Firestore instance using default credentials, allowing increment.ts to update the counter and apply rate-limiting metadata
+
+## BOOM / BUST
+
+Play at `/games/boom-bust`, linked from Projects. The standalone HTML, CSS, and JavaScript live in `public/games/boom-bust/`; a Next.js rewrite supplies the clean URL. No additional dependencies, API keys, or services are required. It ships with the existing App Engine deployment.
+
+The original development copy is in the separate games workspace (`boom-bust/`). To update the website, copy `style.css`, `model.js`, and `game.js` into this public folder. When updating `index.html`, retain the absolute `/games/boom-bust/` asset URLs, clean game link, metadata, and Back to projects link. Do not copy development tests into public.
