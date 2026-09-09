@@ -6,6 +6,13 @@ import styles from "../../styles/KnittingVisualizer.module.css";
 type Stitch = "K" | "P";
 type Side = "RS" | "WS";
 type FabricMode = "yarn" | "symbol";
+type StitchCell = Stitch | null;
+type SimDir = 1 | -1;
+type SimState = {
+  rows: StitchCell[][];
+  sequence: { row: number; col: number; stitch: Stitch }[];
+  cursor: { row: number; col: number; dir: SimDir };
+};
 
 const createGrid = (rows: number, cols: number, fill: Stitch = "K") =>
   Array.from({ length: rows }, () => Array.from({ length: cols }, () => fill));
@@ -56,18 +63,53 @@ const purlBumpRects = ({ x, y, w, h }: StitchGlyphOpts) => {
   return { shadow, main };
 };
 
+const purlLoopPath = ({ x, y, w, h }: StitchGlyphOpts) => {
+  const insetX = w * 0.22;
+  const topY = y + h * 0.18;
+  const midY = y + h * 0.46;
+  const baseY = y + h * 0.78;
+
+  const leftX = x + insetX;
+  const rightX = x + w - insetX;
+  const cx = x + w / 2;
+
+  return `
+    M ${leftX} ${baseY}
+    C ${leftX} ${midY}, ${cx - w * 0.18} ${midY}, ${cx} ${topY}
+    C ${cx + w * 0.18} ${midY}, ${rightX} ${midY}, ${rightX} ${baseY}
+  `;
+};
+
+const buildSimRow = (cols: number) =>
+  Array.from({ length: cols }, () => null as StitchCell);
+
+const createSimState = (cols: number): SimState => ({
+  rows: [buildSimRow(cols)],
+  sequence: [],
+  cursor: { row: 0, col: 0, dir: 1 },
+});
+
 export default function KnittingVisualizer() {
   const [rows, setRows] = useState(12);
   const [cols, setCols] = useState(12);
   const [viewSide, setViewSide] = useState<Side>("RS");
   const [fabricMode, setFabricMode] = useState<FabricMode>("yarn");
   const [chart, setChart] = useState<Stitch[][]>(() => createGrid(12, 12, "K"));
+  const [simCols, setSimCols] = useState(10);
+  const [simState, setSimState] = useState<SimState>(() => createSimState(10));
 
   const cellSize = 28;
   const rowPitch = Math.round(cellSize * 0.72);
   const labelWidth = 40;
   const fabricWidth = labelWidth + cols * cellSize;
   const fabricHeight = rows * rowPitch + cellSize * 0.5;
+
+  const simCell = 36;
+  const simRowPitch = Math.round(simCell * 0.72);
+  const simLabelWidth = 46;
+  const simRows = simState.rows.length;
+  const simWidth = simLabelWidth + simCols * simCell;
+  const simHeight = Math.max(simRows * simRowPitch + simCell * 0.5, simCell * 1.5);
 
   const resizeChart = (nextRows: number, nextCols: number) => {
     setChart((prev) =>
@@ -76,6 +118,59 @@ export default function KnittingVisualizer() {
       ),
     );
   };
+
+  const resetSimulator = (nextCols = simCols) => {
+    setSimState(createSimState(nextCols));
+  };
+
+  const addSimStitch = (stitch: Stitch) => {
+    setSimState((prev) => {
+      const rowsCopy = prev.rows.map((row) => [...row]);
+      const { row, col, dir } = prev.cursor;
+      if (!rowsCopy[row]) {
+        rowsCopy[row] = buildSimRow(simCols);
+      }
+      rowsCopy[row][col] = stitch;
+
+      const nextSequence = [...prev.sequence, { row, col, stitch }];
+      let nextRow = row;
+      let nextCol = col + dir;
+      let nextDir = dir;
+
+      if (nextCol < 0 || nextCol >= simCols) {
+        nextRow = row + 1;
+        nextDir = (dir * -1) as SimDir;
+        nextCol = nextDir === 1 ? 0 : simCols - 1;
+        if (!rowsCopy[nextRow]) {
+          rowsCopy[nextRow] = buildSimRow(simCols);
+        }
+      }
+
+      return {
+        rows: rowsCopy,
+        sequence: nextSequence,
+        cursor: { row: nextRow, col: nextCol, dir: nextDir },
+      };
+    });
+  };
+
+  const yarnPath = useMemo(() => {
+    if (simState.sequence.length === 0) {
+      return "";
+    }
+    return simState.sequence
+      .map((point, index) => {
+        const x = simLabelWidth + point.col * simCell + simCell / 2;
+        const y = (simRows - 1 - point.row) * simRowPitch + simCell * 0.55;
+        return `${index === 0 ? "M" : "L"} ${x} ${y}`;
+      })
+      .join(" ");
+  }, [simState.sequence, simRows, simCell, simLabelWidth, simRowPitch]);
+
+  const nextRowNumber = simState.cursor.row + 1;
+  const nextColNumber =
+    simState.cursor.dir === 1 ? simState.cursor.col + 1 : simCols - simState.cursor.col;
+  const nextDirection = simState.cursor.dir === 1 ? "→" : "←";
 
   const toggleStitch = (r: number, c: number) => {
     setChart((prev) => {
@@ -118,6 +213,104 @@ export default function KnittingVisualizer() {
           Edit the chart as stitches you work. Fabric preview converts stitches based
           on whether you are viewing the right side (RS) or wrong side (WS).
         </p>
+
+        <section className={styles.simulator}>
+          <div className={styles.simulatorHeader}>
+            <div>
+              <h2>Knitting Simulator (one stitch at a time)</h2>
+              <p className={styles.simHint}>
+                Click knit or purl to add a stitch in the active row. Rows flip
+                direction as you work back and forth so the yarn path stays continuous.
+              </p>
+            </div>
+            <div className={styles.simControls}>
+              <label>
+                Row length
+                <input
+                  type="number"
+                  min={4}
+                  max={24}
+                  value={simCols}
+                  onChange={(e) => {
+                    const nextCols = Math.max(4, Math.min(24, Number(e.target.value) || 4));
+                    setSimCols(nextCols);
+                    resetSimulator(nextCols);
+                  }}
+                />
+              </label>
+              <div className={styles.buttonRow}>
+                <button type="button" onClick={() => addSimStitch("K")}>Add Knit</button>
+                <button type="button" onClick={() => addSimStitch("P")}>Add Purl</button>
+                <button type="button" onClick={() => resetSimulator()}>Reset</button>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.simStatus}>
+            Next stitch: row {nextRowNumber}, stitch {nextColNumber} {nextDirection}
+          </div>
+
+          <div className={styles.simWrap}>
+            <svg
+              className={styles.simSvg}
+              viewBox={`0 0 ${simWidth} ${simHeight}`}
+              role="img"
+              aria-label="Knitting simulator fabric with continuous yarn"
+            >
+              <rect x="0" y="0" width={simWidth} height={simHeight} fill="#f3d9bf" />
+              {yarnPath && (
+                <path
+                  d={yarnPath}
+                  fill="none"
+                  stroke="#c2723d"
+                  strokeWidth={6}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  opacity={0.65}
+                />
+              )}
+              {simState.rows.map((row, r) => {
+                const rowNumber = r + 1;
+                const y = (simRows - 1 - r) * simRowPitch;
+                return (
+                  <Fragment key={`sim-row-${rowNumber}`}>
+                    <text
+                      x={simLabelWidth - 6}
+                      y={y + simCell * 0.62}
+                      textAnchor="end"
+                      className={styles.simLabel}
+                    >
+                      {rowNumber}
+                    </text>
+                    {row.map((stitch, c) => {
+                      if (!stitch) {
+                        return null;
+                      }
+                      const x = simLabelWidth + c * simCell;
+                      const loopColor = stitch === "K" ? "#7b4b2a" : "#5b3721";
+                      return (
+                        <path
+                          key={`sim-${r}-${c}`}
+                          d={
+                            stitch === "K"
+                              ? knitLoopPath({ x, y, w: simCell, h: simCell })
+                              : purlLoopPath({ x, y, w: simCell, h: simCell })
+                          }
+                          fill="none"
+                          stroke={loopColor}
+                          strokeWidth={3}
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          opacity={0.92}
+                        />
+                      );
+                    })}
+                  </Fragment>
+                );
+              })}
+            </svg>
+          </div>
+        </section>
 
         <section className={styles.controls}>
           <label>

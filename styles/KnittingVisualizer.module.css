@@ -19,6 +19,71 @@
   padding: 0.8rem;
 }
 
+.simulator {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: #ffe9d3;
+  border: 1px solid #d6a376;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.simulatorHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.simHint {
+  margin: 0.3rem 0 0;
+  font-size: 0.95rem;
+}
+
+.simControls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: flex-start;
+}
+
+.simControls label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  gap: 0.3rem;
+}
+
+.simControls input {
+  font: inherit;
+  padding: 0.3rem 0.5rem;
+}
+
+.simStatus {
+  font-weight: 600;
+}
+
+.simWrap {
+  background: #e8c19a;
+  border-radius: 8px;
+  padding: 0.4rem;
+  overflow-x: auto;
+}
+
+.simSvg {
+  display: block;
+  min-width: 420px;
+  width: 100%;
+  height: auto;
+}
+
+.simLabel {
+  font-size: 11px;
+  fill: #4b3322;
+  font-weight: 700;
+}
+
 .controls label {
   display: flex;
   flex-direction: column;
@@ -118,6 +183,16 @@ button.cell {
 }
 
 @media (min-width: 960px) {
+  .simulatorHeader {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .simControls {
+    align-items: flex-end;
+  }
+
   .visualizers {
     grid-template-columns: 1fr 1fr;
     align-items: flex-start;
