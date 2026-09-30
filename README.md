@@ -54,3 +54,7 @@ Creates a server-side Firestore instance using default credentials, allowing inc
 Play at `/games/boom-bust`, linked from Projects. The standalone HTML, CSS, and JavaScript live in `public/games/boom-bust/`; a Next.js rewrite supplies the clean URL. No additional dependencies, API keys, or services are required. It ships with the existing App Engine deployment.
 
 The original development copy is in the separate games workspace (`boom-bust/`). To update the website, copy `style.css`, `model.js`, and `game.js` into this public folder. When updating `index.html`, retain the absolute `/games/boom-bust/` asset URLs, clean game link, metadata, and Back to projects link. Do not copy development tests into public.
+
+## Blog publishing
+
+Posts live in `blogposts/*.mdx` with title/date frontmatter and an optional author. Blog listing and article pages are generated at build time, so publishing a new post currently requires a site rebuild and deployment. A future improvement is to decouple post publishing from full site builds, making it easier to drop in new posts; no CMS refactor is included in the current publishing workflow.

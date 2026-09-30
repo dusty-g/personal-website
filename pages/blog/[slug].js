@@ -36,15 +36,17 @@ export default function BlogPost({ source, meta }) {
       <Head>
         <title>{meta.title || 'Untitled Post'}</title>
         <meta name="description" content={meta.title || 'Blog post'} />
+        {meta.author && <meta name="author" content={meta.author} />}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Nav />
       <div style={{ padding: '2rem' }}>
         <h1>{meta.title || 'Untitled Post'}</h1>
+        {meta.author && <p>By {meta.author}</p>}
         {meta.date && (
           <p style={{ color: '#999' }}>
-            {meta.date}
+            {meta.displayDate || meta.date}
           </p>
         )}
         <article style={{ marginTop: '2rem' }}>
