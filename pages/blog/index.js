@@ -24,9 +24,10 @@ export default function BlogIndex({ posts }) {
               </Link>
               {post.date && (
                 <span style={{ marginLeft: '0.5rem', color: '#999' }}>
-                  {post.date} {/* Render date string directly */}
+                  {post.displayDate || post.date}
                 </span>
               )}
+              {post.author && <span style={{ marginLeft: '0.5rem' }}>By {post.author}</span>}
             </li>
           ))}
         </ul>
