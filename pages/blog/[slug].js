@@ -16,6 +16,9 @@ const ExampleButtonHexConfetti = dynamic(
   () => import('../../components/ExampleButtonHexConfetti'),
   { ssr: false }
 );
+const ArtemisChat = dynamic(() => import('../../components/ArtemisChat'), {
+  ssr: false,
+});
 /**
  * If you have custom components you want to embed in MDX
  * usage, define them here and pass as `components` to <MDXRemote />
@@ -26,6 +29,7 @@ const MDXComponents = {
   SumOfOddsVisualizer,
   ExampleButtonHexConfetti,
   ClickCounter,
+  ArtemisChat,
 };
 
 export default function BlogPost({ source, meta }) {
